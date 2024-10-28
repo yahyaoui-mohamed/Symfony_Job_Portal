@@ -129,6 +129,7 @@
 								</div>
 
 								<div class="mb-3">
+								<input type="checkbox" name="" id="3year">
 							 	<label for="3year">3 Years</label>
 								</div>
 
@@ -186,22 +187,21 @@
 													<span>Creative Agency</span>
 												</div>
 												<div class="col-lg-4">
-													Paris, France
+													{{job.city}}, {{job.country}}
 												</div>
 												<div class="col-lg-4">
-													{{job.minsalary}} - {{job.maxsalary}}
+													{{job.minsalary}} € - {{job.maxsalary}} €
 												</div>
 											</div>
 										</div>
 									</div>
 									<div class="col-lg-2">
-										<a href="./jobs/page/{{job.id}}" class="btn btn-primary">Apply</a>
+										<a href="./jobs/{{job.id}}" class="btn btn-primary">Apply</a>
 									</div>
 								</div>
 							</div>
 						{% endfor %}
-						
-
+						{{ knp_pagination_render(jobs) }}
 
 					</div>
 

@@ -4,18 +4,28 @@ namespace App\Controller;
 
 use App\Entity\Job;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class JobsController extends AbstractController
 {
     #[Route('/jobs', name: 'app_jobs')]
-    public function index(EntityManagerInterface $em): Response
+    public function index(Request $request, EntityManagerInterface $em, PaginatorInterface $paginator): Response
     {
 
-        $jobs = $em->getRepository(Job::class)->findAll();
-        $numOfJobs = count($jobs);
+        $allJobs = $em->getRepository(Job::class)->findAll();
+        $query = $em->getRepository(Job::class)->createQueryBuilder('j')->getQuery();
+        $jobs = $paginator->paginate(
+
+            $query,
+            $request->query->getInt('page', 1),
+            5
+        );
+
+        $numOfJobs = count($allJobs);
 
         return $this->render('jobs/index.html.twig', [
             'jobs' => $jobs,
@@ -23,7 +33,7 @@ class JobsController extends AbstractController
         ]);
     }
 
-    #[Route('/jobs/page/{page}', name: 'app_jobs_pages')]
+    #[Route('/jobs/{page}', name: 'app_jobs_pages')]
     public function page($page, EntityManagerInterface $em): Response
     {
 

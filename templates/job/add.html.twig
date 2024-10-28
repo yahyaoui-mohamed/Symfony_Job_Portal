@@ -42,6 +42,18 @@
 					{{ form_widget(form.type, {'attr': {'class': 'form-control', 'placeholder':'Type'}})  }}
 					{{ form_errors(form.type) }}
 				</div>
+
+				<div class="form-group mb-3">
+					{{ form_widget(form.country, {'attr': {'class': 'form-control', 'placeholder':'Country'}})  }}
+					{{ form_errors(form.country) }}
+				</div>
+
+
+				<div class="form-group mb-3">
+					{{ form_widget(form.city, {'attr': {'class': 'form-control', 'placeholder':'City'}})  }}
+					{{ form_errors(form.city) }}
+				</div>
+
 				<div class="form-group mb-3">
 					{{ form_widget(form.post, {'attr': {'class': 'btn btn-primary'}}) }}
 

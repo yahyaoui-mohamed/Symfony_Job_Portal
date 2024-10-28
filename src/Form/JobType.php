@@ -20,6 +20,8 @@ class JobType extends AbstractType
             ->add('description', TextareaType::class)
             ->add('minsalary', NumberType::class)
             ->add('maxsalary', NumberType::class)
+            ->add('country', TextType::class)
+            ->add('city', TextType::class)
             ->add('type')
             ->add("post", SubmitType::class)
         ;

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20241026133444 extends AbstractMigration
+final class Version20241028124220 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,12 +20,12 @@ final class Version20241026133444 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user ADD registered_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\'');
+        $this->addSql('ALTER TABLE job ADD country VARCHAR(255) NOT NULL, ADD city VARCHAR(255) NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE `user` DROP registered_at');
+        $this->addSql('ALTER TABLE job DROP country, DROP city');
     }
 }
