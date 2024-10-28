@@ -29,18 +29,19 @@
       
         </ul>
       
-        <div class="d-flex" >
-        {% if app.user %}
-          {% if 'ROLE_ADMIN' in app.user.roles %}
-              <a href="{{ path('app_admin') }}" class="auth-btn">Admin</a>
-          {% elseif 'ROLE_RECRUITER' in app.user.roles %}
-              <a href="{{path("app_recruiter")}}" class="auth-btn">Account</a>
-          {% elseif 'ROLE_USER' in app.user.roles %}{% else %}
-              <a href="{{path("app_account")}}" class="auth-btn">Account</a>{% endif %}
+        <div class="d-flex">
+          {% if app.user %}
+            {% if 'ROLE_ADMIN' in app.user.roles %}
+                <a href="{{ path('app_admin') }}" class="auth-btn">Admin</a>
+            {% elseif 'ROLE_RECRUITER' in app.user.roles %}
+                <a href="{{path("app_recruiter")}}" class="auth-btn">Account</a>
+            {% elseif 'ROLE_USER' in app.user.roles %}
+                <a href="{{path("app_account")}}" class="auth-btn">Account</a>
+            {% endif %}
           {% else %}
-          <a href="{{path("app_signup")}}" class="auth-btn" href=>Register</a>
-          <a href="{{path("app_login")}}" class="auth-btn">Login</a>
-        {% endif %}
+            <a href="{{path("app_signup")}}" class="auth-btn">Register</a>
+            <a href="{{path("app_login")}}" class="auth-btn">Login</a>
+          {% endif %}
         </div>
       
       </div>
@@ -50,12 +51,14 @@
 <div class="hero">
   <div class="overlay"></div>
   <div class="job-search">
-    <form>
+    {{ form_start(form) }}
       <div class="d-flex">
-        {{form_widget(search.job, {'attr' : {'class': 'search-bar form-control', 'placeholder':'Enter job...'}})}}
-        {{form_widget(search.chercher, {'attr' : {'class': 'btn search-btn'}})}}  
+        {{form_widget(form.job, {'attr' : {'class': 'search-bar form-control', 'placeholder':'Job title or keywords'}})}}
+        {{form_widget(form.location, {'attr' : {'class': 'form-select'}})}}
+        {{form_widget(form.chercher, {'attr' : {'class': 'btn search-btn'}})}}  
       </div>
-  </form>
+    {{ form_end(form) }}
+
   </div>
 </div>
 

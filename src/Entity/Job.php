@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\JobRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: JobRepository::class)]
@@ -32,7 +34,18 @@ class Job
     private ?string $country = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $city = null; 
+    private ?string $city = null;
+
+    /**
+     * @var Collection<int, Applications>
+     */
+    #[ORM\OneToMany(targetEntity: Applications::class, mappedBy: 'job', orphanRemoval: true)]
+    private Collection $applications;
+
+    public function __construct()
+    {
+        $this->applications = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +132,36 @@ class Job
     public function setCity(string $city): static
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Applications>
+     */
+    public function getApplications(): Collection
+    {
+        return $this->applications;
+    }
+
+    public function addApplication(Applications $application): static
+    {
+        if (!$this->applications->contains($application)) {
+            $this->applications->add($application);
+            $application->setJob($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApplication(Applications $application): static
+    {
+        if ($this->applications->removeElement($application)) {
+            // set the owning side to null (unless already changed)
+            if ($application->getJob() === $this) {
+                $application->setJob(null);
+            }
+        }
 
         return $this;
     }

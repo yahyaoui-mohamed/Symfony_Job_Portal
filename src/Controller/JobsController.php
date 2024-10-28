@@ -33,13 +33,13 @@ class JobsController extends AbstractController
         ]);
     }
 
-    #[Route('/jobs/{page}', name: 'app_jobs_pages')]
-    public function page($page, EntityManagerInterface $em): Response
+    #[Route('/jobs/{id}', name: 'app_jobs_pages')]
+    public function page($id, EntityManagerInterface $em): Response
     {
+        $job = $em->getRepository(Job::class)->find($id);
 
-        $jobs = $em->getRepository(Job::class)->findAll();
-        $numOfJobs = count($jobs);
-
-        return $this->render('jobs/jobpage.html.twig', []);
+        return $this->render('jobs/jobpage.html.twig', [
+            'job' => $job
+        ]);
     }
 }

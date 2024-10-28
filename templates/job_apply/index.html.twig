@@ -57,52 +57,55 @@
 
 
 	<div class="container">
-    <div class="job-desc">
-      <div class="row">
-        <div class="col-lg-8">
-          <div class="job-details">
-            <div class="desc-item">
-              <h3>Job description</h3>
-              <p>It is a long established fact that a reader will beff distracted by vbthe creadable content of a page when looking at its layout. The pointf of using Lorem Ipsum is that it has ahf mcore or-lgess normal distribution of letters, as opposed to using, Content here content here making it look like readable.</p>
+		<div class="job-desc">
+			<div class="row">
+				<div class="col-lg-8">
+        <h1 class="mb-5">Apply</h1>
+          {{ form_start(form) }}
+            <div class="row">
+              <div class="col-lg-6 mb-3">
+                {{ form_widget(form.nom, {'attr': {'class' : 'form-control', 'placeholder' : 'First name'}}) }}
+              </div>
+              <div class="col-lg-6 mb-3">
+                  {{ form_widget(form.prenom, {'attr': {'class' : 'form-control', 'placeholder' : 'Last name'}}) }}
+              </div>
+              <div class="col-lg-6 mb-3">
+                {{ form_widget(form.email, {'attr': {'class' : 'form-control', 'placeholder' : 'Email'}}) }}
+              </div>
+              <div class="col-lg-6 mb-3">
+                {{ form_widget(form.telephone, {'attr': {'class' : 'form-control', 'placeholder' : 'Phone number'}}) }}
+              </div>
+              <div class="col-lg-6 mb-3">
+                {{ form_row(form.cv, {'attr': {'class' : 'form-control', 'placeholder' : 'CV'}}) }}
+              </div>
+              <div class="col-lg-6 mb-3">
+                {{ form_row(form.coverletter, {'attr': {'class' : 'form-control', 'placeholder' : 'CV'}}) }}
+              </div>
+
+
+              {{ form_widget(form.apply, {'attr': {'class' : 'btn btn-primary'}}) }}
             </div>
-            <div class="desc-item">
-              <h3>Required Knowledge, Skills, and Abilities</h3>
-              <ul>
-                <li>System Software Development</li>
-                <li>Mobile Applicationin iOS/Android/Tizen or other platform</li>
-                <li>Research and code , libraries, APIs and frameworks</li>
-                <li>Strong knowledge on software development life cycle</li>
-                <li>Strong problem solving and debugging skills</li></li>
-              </ul>
-            </div>
-            <div class="desc-item">
-              <h3>Education + Experience</h3>
-              <ul>
-                <li>3 or more years of professional design experience</li>
-                <li>Direct response email experience</li>
-                <li>Ecommerce website design experience</li>
-                <li>Familiarity with mobile and web apps preferred</li>
-                <li>Experience using Invision a plus</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+          {{ form_end(form) }}
+			  </div>
+			
         <div class="col-lg-4">
           <div class="job-overview">
             <h3>Job overview</h3>
             <ul>
-              <li>Posted date : </li>
-              <li>Location : </li>
-              <li>Job nature : </li>
-              <li>Salary : </li>
+              <li>Posted date :
+              </li>
+              <li>Location :
+              </li>
+              <li>Job nature :
+              </li>
+              <li>Salary :
+              </li>
               <li>Salary :</li>
             </ul>
-            <a href="{{path("app_job_apply", {'id': job.id})}}" class="btn btn-primary">Apply</a>
           </div>
         </div>
-      </div>
-    </div>
-	</div>
 
-{% endblock %}
+		</div>
+	</div>
+</div>{% endblock %}
 

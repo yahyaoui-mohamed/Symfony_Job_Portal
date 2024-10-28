@@ -14,3 +14,13 @@ Les années d'expériences
 
 - Un test d'évaluation sera crée juste après la création d'une offre d'emploi qui est rélié à cette offre et à ce recruteur
 - Le recruteur peut contacter les demandeurs, peut modifier l'offre, peut consulter la liste des candidats dans ce poste,
+
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Applications :
+
+app_id
+user_id
+job_id
+applied_at
