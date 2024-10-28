@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+
+  <div class="content">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="side-bar">
+            <ul>
+              <li><a class={% if (path("app_account"))  %}{{"active"}}{% endif %} href="{{path("app_account")}}">Home</a></li>
+              <li><a href="#">My Applications</a></li>
+              <li><a href="#">Saved</a></li>
+            </ul>
+        </div>
+        <div class="upper-nav">
+          <div class="row">
+            <div class="col-lg-10">
+              <div class="search-bar">
+                <form>
+                  <input type="search" placeholder="Search..." class="form-control"/>
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-2">
+
+                  <div class="d-flex">
+                  <div class="notification">
+                    <span class="notif-count">1</span>
+                    <i class="fi fi-ts-bell"></i>
+                  </div>
+                    <div class="account">
+                      <div class="avatar"></div>
+                      <ul class="account-dropdown">
+                        <li><a href="{{path("app_admin_account")}}">Account</a></li>
+                        <li><a href="#">Parameters</a></li>
+                        <li><a href="{{path("app_logout")}}">Logout</a></li>
+                      
+                      </div>
+                    </div>
+                  </div>
+            </div>
+         </div>
+        </div>
+      </div>
+
+
+      <div class="col-lg-6">
+        <div class="content">
+        
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+{% block js %}
+<script>
+  let dropdown = document.querySelector(".account-dropdown");
+  let avatar = document.querySelector(".avatar");
+  let account = document.querySelector(".account");
+ avatar.addEventListener("click", function(){
+    if(dropdown.classList.contains("show")){
+        dropdown.classList.remove("show");
+    }else{
+      dropdown.classList.add("show");
+    }
+  });
+
+  document.addEventListener("click", function(e){
+    if(dropdown.classList.contains("show")){
+      if(!account.contains(e.target)){
+        dropdown.classList.remove("show");
+      }
+    }
+  });
+
+  
+
+</script>
+{% endblock  %}

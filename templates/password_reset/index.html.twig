@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!
+{% endblock %}
+
+{% block body %}
+	<div class="form-wrapper text-center">
+		{{ form_start(form, {'attr': {'class':'login-form'}}) }}
+        <h1 class="h3 mb-5 font-weight-normal">Reset password</h1>
+        <p>Enter the email associated with your account</p></p>
+        
+        <div class="form-group mb-3">
+            {{ form_widget(form.email) }}
+        </div>
+        <div class="form-group mb-3">
+            {{ form_widget(form.submit) }}
+        </div>
+
+        <div class="alert alert-danger">If you have an account in the given mail, you will recieve a link to reset your password</div>
+        
+        <div class="home">
+            Try <a href="{{path("app_login")}}">Login</a> or return to <a href="{{path("app_index")}}">Home</a>
+        </div>
+        {{ form_end(form) }}
+
+	</div>
+
+{% endblock %}
+
+{% block js %}
+	<script>
+		let eye = document.querySelector(".fi-rr-eye");
+let passwordInput = document.getElementById("inputPassword");
+eye.addEventListener("click", function () {
+if (passwordInput.type === "password") {
+passwordInput.type = "text";
+eye.classList.remove("fi-rr-eye");
+eye.classList.add("fi-rr-eye-crossed");
+} else {
+passwordInput.type = "password";
+eye.classList.remove("fi-rr-eye-crossed");
+eye.classList.add("fi-rr-eye");
+}
+});
+	</script>
+
+{% endblock %}

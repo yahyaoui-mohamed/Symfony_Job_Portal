@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<nav class="navbar navbar-expand-lg">
+		<div class="container">
+			<a class="navbar-brand" href="{{path("app_index")}}">Navbar</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav m-auto mb-2 mb-lg-0">
+
+					<li class="nav-item">
+						<a class="nav-link" href="{{path("app_index")}}">Home</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="{{path("app_jobs")}}">Jobs</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="#">About</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="#">Contact</a>
+					</li>
+
+				</ul>
+
+				<div class="d-flex">
+					{% if app.user %}
+						{% if 'ROLE_ADMIN' in app.user.roles %}
+							<a href="{{ path('app_admin') }}" class="auth-btn">Admin</a>
+						{% elseif 'ROLE_RECRUITER' in app.user.roles %}
+							<a href="{{path("app_recruiter")}}" class="auth-btn">Account</a>
+						{% elseif 'ROLE_USER' in app.user.roles %}
+						{% else %}
+							<a href="{{path("app_account")}}" class="auth-btn">Account</a>
+						{% endif %}
+					{% else %}
+						<a href="{{path("app_signup")}}" class="auth-btn" href=>Register</a>
+						<a href="{{path("app_login")}}" class="auth-btn">Login</a>
+					{% endif %}
+				</div>
+
+			</div>
+		</div>
+	</nav>
+	<div class="slider">
+		<div class="overlay"></div>
+		<div class="slide-content">
+			<h1>Apply for a job</h1>
+		</div>
+	</div>
+
+
+	<div class="container">
+    <div class="job-desc">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="job-details">
+            <div class="desc-item">
+              <h3>Job description</h3>
+              <p>It is a long established fact that a reader will beff distracted by vbthe creadable content of a page when looking at its layout. The pointf of using Lorem Ipsum is that it has ahf mcore or-lgess normal distribution of letters, as opposed to using, Content here content here making it look like readable.</p>
+            </div>
+            <div class="desc-item">
+              <h3>Required Knowledge, Skills, and Abilities</h3>
+              <ul>
+                <li>System Software Development</li>
+                <li>Mobile Applicationin iOS/Android/Tizen or other platform</li>
+                <li>Research and code , libraries, APIs and frameworks</li>
+                <li>Strong knowledge on software development life cycle</li>
+                <li>Strong problem solving and debugging skills</li></li>
+              </ul>
+            </div>
+            <div class="desc-item">
+              <h3>Education + Experience</h3>
+              <ul>
+                <li>3 or more years of professional design experience</li>
+                <li>Direct response email experience</li>
+                <li>Ecommerce website design experience</li>
+                <li>Familiarity with mobile and web apps preferred</li>
+                <li>Experience using Invision a plus</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="job-overview">
+            <h3>Job overview</h3>
+            <ul>
+              <li>Posted date : </li>
+              <li>Location : </li>
+              <li>Job nature : </li>
+              <li>Salary : </li>
+              <li>Salary :</li>
+            </ul>
+            <a href="#" class="btn btn-primary">Apply</a>
+          </div>
+        </div>
+      </div>
+    </div>
+	</div>
+
+{% endblock %}
+

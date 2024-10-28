@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Signup
+{% endblock %}
+
+{% block body %}
+
+<div class="form-wrapper text-center">
+
+	{{ form_start(form, {'attr' : {'class':'signup-form'}}) }}
+	<h1 class="h3 mb-5 font-weight-normal">Register</h1>
+	
+ {% for message in app.flashes('success') %}
+	<div class="alert alert-success">
+			{{ message }}
+	</div>
+	{% endfor %}
+	
+	<div class="form-group mb-3">
+			<div class="signup-option">
+				 {% for child in form.role %}
+            <div class="radio-item">
+                {{ form_widget(child) }}
+               	 {{ form_label(child) }}
+            </div>
+        {% endfor %}
+			</div>
+
+	</div>
+
+	<div class="form-group mb-3">
+		{{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder':'Nom'}}) }}
+		{{ form_errors(form.nom) }}
+	</div>
+
+	<div class="form-group mb-3">
+		{{ form_widget(form.prenom, {'attr': {'class': 'form-control', 'placeholder':'Prénom'}}) }}
+		{{ form_errors(form.prenom) }}
+	</div>
+
+	<div class="form-group mb-3">
+		{{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder':'Email'}})  }}
+		{{ form_errors(form.email) }}
+	</div>
+
+	<div class="form-group mb-3">
+		{{ form_widget(form.motdepasse, {'attr': {'class': 'form-control', 'placeholder':'Mot de passe'}}) }}
+		{{ form_errors(form.motdepasse) }}
+	</div>
+
+	<div class="form-group mb-3">
+		{{ form_widget(form.Sign_up, {'attr': {'class': 'btn btn-primary'}}) }}
+	</div>
+
+	<div class="form-group mb-3">
+		<span>Already have an account?</span> <a href="{{path("app_login")}}">Login</a>
+		<p>- OR -<p>
+		<div class="home-page-redirect">Go to <a href="{{path("app_index")}}">Home Page</a></div>
+	</div>
+
+	{{ form_end(form) }}
+</div>
+{% endblock %}
+

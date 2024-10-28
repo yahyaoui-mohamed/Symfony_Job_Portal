@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Admin Account {% endblock %}
+
+{% block body %}
+
+<div class="row">
+	
+    <div class="admin">
+		{% include 'sidebar.html.twig' %}
+	</div>
+
+    <div class="col-lg-6">
+        <div class="content">
+            {{ form_start(form) }}
+            <h1>Account</h1>
+            <div class="form-group mb-3">
+                {{ form_widget(form.job, {'attr': {'class': 'form-control', 'placeholder':'Nom', 'value': user.nom}}) }}
+                {{ form_errors(form.job) }}
+            </div>
+
+            <div class="form-group mb-3">
+                {{ form_widget(form.prenom, {'attr': {'class': 'form-control', 'placeholder':'Prénom', 'value': user.prenom}}) }}
+                {{ form_errors(form.prenom) }}
+            </div>
+
+            <div class="form-group mb-3">
+                {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder':'Email', 'value':user.email}})  }}
+                {{ form_errors(form.email) }}
+            </div>
+
+            <div class="form-group mb-3">
+                {{ form_widget(form.signup, {'attr': {'class': 'btn btn-primary'}}) }}
+            </div>
+
+             {{ form_end(form) }}
+
+        </div>
+    </div>
+
+</div>
+
+
+
+{% endblock %}
+{% block js %}
+	<script>
+		let dropdown = document.querySelector(".account-dropdown");
+let avatar = document.querySelector(".avatar");
+let account = document.querySelector(".account");
+avatar.addEventListener("click", function () {
+if (dropdown.classList.contains("show")) {
+dropdown.classList.remove("show");
+} else {
+dropdown.classList.add("show");
+}
+});
+
+document.addEventListener("click", function (e) {
+if (dropdown.classList.contains("show")) {
+if (! account.contains(e.target)) {
+dropdown.classList.remove("show");
+}
+}
+});
+	</script>
+{% endblock  %}

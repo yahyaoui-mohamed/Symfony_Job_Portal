@@ -1,0 +1,152 @@
+.slider {
+  position: relative;
+  background-image: url("../images/about.webp");
+  background-size: cover;
+  min-height: 450px;
+  margin-top: 80px;
+
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(251, 36, 106, 0.6);
+    z-index: 0;
+  }
+
+  .slide-content {
+    z-index: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 450px;
+    color: #fff;
+
+    h1 {
+      font-family: Montserrat, sans-serif;
+      font-size: 62px;
+      font-weight: bold;
+    }
+  }
+}
+
+.job-wrap {
+  margin-top: 50px;
+
+  .job-list {
+    .list {
+      .job-item {
+        margin-bottom: 80px;
+
+        .company-pic {
+          img {
+            width: 85px;
+            height: 85px;
+          }
+        }
+
+        &:first-child {
+          margin-top: 50px;
+        }
+      }
+    }
+
+
+  }
+
+  .job-filter {
+    .title {
+      padding: 20px 10px;
+
+      i {
+        margin-right: 10px;
+        font-size: 14px;
+        color: #1bcf6b;
+      }
+
+      h4 {
+        font-size: 16px;
+        // font-weight: 500;
+      }
+    }
+
+    .filter {
+      border: 1px solid #ededed;
+      padding: 30px;
+
+      .filter-item {
+        margin-bottom: 40px;
+
+        .mb-3 {
+          display: flex;
+          align-items: center;
+
+          input[type=checkbox] {
+            width: 15px;
+            height: 15px;
+          }
+
+          label {
+            color: #666666;
+            margin-left: 5px;
+          }
+        }
+
+
+
+        ul {
+          margin: 0;
+          padding: 0;
+        }
+
+
+        h3 {
+          color: #000;
+          font-family: Montserrat;
+          font-size: 18px;
+          margin-bottom: 10px;
+        }
+      }
+    }
+
+  }
+}
+
+.job-desc {
+  margin-top: 80px;
+
+  .job-details {
+    padding-right: 50px;
+  }
+
+  .job-overview {
+    border: 1px solid #ededed;
+    padding: 30px;
+
+    h3 {
+      font-size: 18px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .desc-item {
+    margin-bottom: 50px;
+
+    ul {
+      list-style: circle;
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+Users:
+  Admin
+  Recruteur
+  Demandeur d'emploi
+
+Le Recruteur peut ajouter une offre d'emploi en précisant :
+
+Le titre,
+La description,
+La localisation de l'offre
+Les langages / technologies demandées
+Les années d'expériences
+
+
+- Un test d'évaluation sera crée juste après la création d'une offre d'emploi qui est rélié à cette offre et à ce recruteur
+- Le recruteur peut contacter les demandeurs, peut modifier l'offre, peut consulter la liste des candidats dans ce poste,
