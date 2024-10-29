@@ -30,7 +30,7 @@ Follow these steps to set up your project locally:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/your-repo.git
+   git clone [https://github.com/yourusername/your-repo.git](https://github.com/yahyaoui-mohamed/Symfony_Job_Portal)
 2. **Install dependecies**:
    ```bash
    composer install
