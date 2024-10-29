@@ -19,14 +19,19 @@ class IndexController extends AbstractController
       ->add("location", ChoiceType::class, [
         'choices' => [
           'France' => 'France',
-          'Germany' => 'Germany'
+          'Germany' => 'Germany',
+          'Morocco' => 'Morocco',
+          'Spain' => 'Spain',
+          'England' => 'England',
+          'Tunisia' => 'Tunisia',
+          'USA' => 'USA',
         ],
         'placeholder' => 'Choose a location',
         'attr' => [
           'class' => 'form-select'
         ]
       ])
-      ->add("chercher", SubmitType::class)
+      ->add("search", SubmitType::class)
       ->getForm();
 
     // $form->handleRequest($request);

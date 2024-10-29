@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile
+{% endblock %}
+
+{% block body %}
+
+	<div class="row">
+		<div class="admin">
+			{% include 'user_sidebar.html.twig' %}
+		</div>
+		<div class="col-lg-10">
+			<div class="content">
+                <h1>Profile</h1>
+                
+                {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+                        {{ form_widget(form.firstname, {'attr': {
+                            
+                        }}) }}
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        {{ form_widget(form.lastname, {'attr': {
+                        }}) }}
+
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        {{ form_widget(form.email, {'attr': {
+                        }}) }}
+
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        {{ form_widget(form.phone, {'attr': {
+                        }}) }}
+                    </div>
+
+                    <div class="col-lg-12 mb-3">
+                        {{ form_widget(form.cv) }}
+                    </div>
+                        
+<div class="col-lg-12 mb-3">
+	<div class="educations">
+    <h1>Education</h1>
+		{% for education in form.education %}
+			<div class="education-entry">
+				{{ form_row(education.year, {'attr': {'class': 'form-select'}}) }}
+				{{ form_row(education.degree, {'attr': {'class': 'form-control'}}) }}
+				{{ form_row(education.university, {'attr': {'class': 'form-control'}}) }}
+				<button type="button" class="btn btn-danger remove-education">Remove</button>
+			</div>
+		{% endfor %}
+
+		<!-- The prototype for new entries -->
+		<div class="education-entry">
+			{{ form_row(form.education.vars.prototype.year)}}
+			{{ form_row(form.education.vars.prototype.degree)}}
+			{{ form_row(form.education.vars.prototype.university)}}
+		</div>
+
+		<button type="button" class="btn btn-success add-education">Add More</button>
+	</div>
+</div>
+
+
+</div>
+
+
+
+
+
+                    <div class="col-lg-6 mb-3">
+                        {{ form_widget(form.save) }}
+                    </div>
+
+                </div>
+                    
+
+                {{ form_end(form) }}
+            </div>
+		</div>
+	</div>
+
+
+{% endblock %}
+{% block js %}
+	<script>
+		let dropdown = document.querySelector(".account-dropdown");
+let avatar = document.querySelector(".avatar");
+let account = document.querySelector(".account");
+avatar.addEventListener("click", function () {
+if (dropdown.classList.contains("show")) {
+dropdown.classList.remove("show");
+} else {
+dropdown.classList.add("show");
+}
+});
+
+document.addEventListener("click", function (e) {
+if (dropdown.classList.contains("show")) {
+if (! account.contains(e.target)) {
+dropdown.classList.remove("show");
+}
+}
+});
+
+ document.addEventListener('DOMContentLoaded', function () {
+        const educationContainer = document.querySelector('.educations');
+        const addEducationButton = document.querySelector('.add-education');
+
+        // Manually define the template for a new education entry in JavaScript
+        const createEducationEntry = (index) => {
+            return `
+                <div class="education-entry">
+                    <input type="text" name="form[education][${index}][year]" placeholder="Year" class="form-control">
+                    <input type="text" name="form[education][${index}][degree]" placeholder="Degree" class="form-control">
+                    <input type="text" name="form[education][${index}][university]" placeholder="University" class="form-control">
+                    <button type="button" class="btn btn-danger remove-education">Remove</button>
+                </div>`;
+        };
+
+        addEducationButton.addEventListener('click', function () {
+            const index = educationContainer.querySelectorAll('.education-entry').length;
+            const newEntryHtml = createEducationEntry(index);
+            educationContainer.insertAdjacentHTML('beforeend', newEntryHtml);
+        });
+
+        // Event delegation to handle removing dynamically added fields
+        educationContainer.addEventListener('click', function (event) {
+            if (event.target.classList.contains('remove-education')) {
+                event.target.closest('.education-entry').remove();
+            }
+        });
+    });
+	</script>
+{% endblock  %}
+

@@ -1,19 +1,20 @@
 <div class="col-lg-6">
 	<div class="side-bar">
 		<ul>
-      <li>
+			<li>
+				<a href="{{path("app_account")}}">Home</a>
+			</li>
 
-        <a class={% if path("app_recruiter") %} {{"active"}} {% endif %} href="{{path("app_recruiter")}}">Home</a>
-      </li>
-    
-      <li>
-        <a class={% if path("app_job") %} {{"active"}} {% endif %} href="{{path("app_job")}}">My Jobs</a>
-      </li>
+			<li>
+				<a href="{{path("app_account_applications")}}">My Applications</a>
+			</li>
 
-			<li><a href="#">Interview</a></li>
-			<li><a href="#">Applications</a></li>
-	
-    </ul>
+			<li>
+				<a href="{{path("app_account_saved")}}">Saved</a>
+			</li>
+
+
+		</ul>
 	</div>
 	<div class="upper-nav">
 		<div class="row">
@@ -34,7 +35,7 @@
 						<div class="avatar"></div>
 						<ul class="account-dropdown">
 							<li>
-								<a href="{{path("app_admin_account")}}">Account</a>
+								<a href="{{path("app_user_profile")}}">Profile</a>
 							</li>
 							<li>
 								<a href="#">Parameters</a>
@@ -49,3 +50,4 @@
 		</div>
 	</div>
 </div>
+

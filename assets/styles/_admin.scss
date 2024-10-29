@@ -8,6 +8,7 @@
     ul {
       padding: 20px 0;
       margin-top: 50px;
+      list-style: none;
 
       li {
         margin-bottom: 10px;
@@ -66,6 +67,7 @@
       position: relative;
 
       .account-dropdown {
+        list-style: none;
         position: absolute;
         left: -89px;
         top: 60px;

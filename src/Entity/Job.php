@@ -42,6 +42,9 @@ class Job
     #[ORM\OneToMany(targetEntity: Applications::class, mappedBy: 'job', orphanRemoval: true)]
     private Collection $applications;
 
+    #[ORM\Column]
+    private ?bool $available = null;
+
     public function __construct()
     {
         $this->applications = new ArrayCollection();
@@ -162,6 +165,18 @@ class Job
                 $application->setJob(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isAvailable(): ?bool
+    {
+        return $this->available;
+    }
+
+    public function setAvailable(bool $available): static
+    {
+        $this->available = $available;
 
         return $this;
     }

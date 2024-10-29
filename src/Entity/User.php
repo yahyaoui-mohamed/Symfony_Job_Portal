@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -52,9 +53,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Applications::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $applications;
 
+    /**
+     * @var Collection<int, Education>
+     */
+    #[ORM\OneToMany(targetEntity: Education::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $education;
+
     public function __construct()
     {
         $this->applications = new ArrayCollection();
+        $this->education = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -93,8 +101,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
         return array_unique($roles);
     }
 
@@ -204,6 +210,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($application->getUser() === $this) {
                 $application->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Education>
+     */
+    public function getEducation(): Collection
+    {
+        return $this->education;
+    }
+
+    public function addEducation(Education $education): static
+    {
+        if (!$this->education->contains($education)) {
+            $this->education->add($education);
+            $education->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEducation(Education $education): static
+    {
+        if ($this->education->removeElement($education)) {
+            // set the owning side to null (unless already changed)
+            if ($education->getUser() === $this) {
+                $education->setUser(null);
             }
         }
 
