@@ -37,7 +37,6 @@ Follow these steps to set up your project locally:
 3. **Install node modules**:
    ```bash
    npm install
-
    
 ### Customization Tips
 - **Project Title**: Replace "Project Title" with the actual title of your project.
@@ -47,6 +46,3 @@ Follow these steps to set up your project locally:
 - **Contributing Guidelines**: Add any specific guidelines for contributing if necessary.
 - **License Information**: Update the license section to reflect the actual license used for your project.
 - **Contact Information**: Provide your contact details for anyone who may wish to reach out.
-
-By following this template, you'll create a clear, informative README that helps users understand your project and how to get started with it.
-
