@@ -22,10 +22,10 @@ A brief description of your project, what it does, and its purpose.
 
 ## Technologies Used
 
-- **Language**: Describe the programming languages used (e.g., PHP, JavaScript).
-- **Frameworks**: Mention any frameworks (e.g., Symfony, React).
-- **Database**: Specify the database systems used (e.g., MySQL, PostgreSQL).
-- **Others**: List any libraries, APIs, or other tools that are integral to your project.
+- **Language**: PHP, Javascript
+- **Frameworks**: Symfony
+- **Database**: MySL.
+- **Others**: Sass, Bootstrap.
 
 ## Installation
 
@@ -34,3 +34,24 @@ Follow these steps to set up your project locally:
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/yourusername/your-repo.git
+
+2. **Install dependecies**:
+   ```bash
+   composer install
+
+3. **Install node modules**:
+   ```bash
+   npm install
+
+   
+### Customization Tips
+- **Project Title**: Replace "Project Title" with the actual title of your project.
+- **Descriptions**: Fill in the sections with appropriate descriptions for your project’s features and technologies.
+- **Installation Steps**: Adjust the installation instructions to match your project's specific setup requirements.
+- **Usage Instructions**: Provide specific commands and examples relevant to your project.
+- **Contributing Guidelines**: Add any specific guidelines for contributing if necessary.
+- **License Information**: Update the license section to reflect the actual license used for your project.
+- **Contact Information**: Provide your contact details for anyone who may wish to reach out.
+
+By following this template, you'll create a clear, informative README that helps users understand your project and how to get started with it.
+
