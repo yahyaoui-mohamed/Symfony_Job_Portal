@@ -1,6 +1,4 @@
-# Project Title
-
-A brief description of your project, what it does, and its purpose.
+# Job Portal using Symfony
 
 ## Table of Contents
 
@@ -18,13 +16,12 @@ A brief description of your project, what it does, and its purpose.
 - **Feature 2**: Brief description of feature 2.
 - **Feature 3**: Brief description of feature 3.
 
-> List all the key features your project offers to users.
 
 ## Technologies Used
 
 - **Language**: PHP, Javascript
 - **Frameworks**: Symfony
-- **Database**: MySL.
+- **Database**: MySQL.
 - **Others**: Sass, Bootstrap.
 
 ## Installation
@@ -34,11 +31,9 @@ Follow these steps to set up your project locally:
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/yourusername/your-repo.git
-
 2. **Install dependecies**:
    ```bash
    composer install
-
 3. **Install node modules**:
    ```bash
    npm install
