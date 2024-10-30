@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\EducationType;
+use App\Form\ExperienceType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -91,6 +92,16 @@ class AccountController extends AbstractController
                 'prototype_name' => '__name__',
                 'data' => $user->getEducation(), // Pass existing education data
             ])
+            ->add("experience", CollectionType::class, [
+                'entry_type' => ExperienceType::class, // Add your EducationType form here
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'label' => 'Education',
+                'prototype' => true,
+                'prototype_name' => '__name__',
+                'data' => $user->getExperiences(), // Pass existing education data
+            ])
             ->add("save", SubmitType::class, [
                 'attr' => [
                     "class" => 'btn btn-primary'
@@ -103,6 +114,10 @@ class AccountController extends AbstractController
             foreach ($form->get('education')->getData() as $education) {
                 $education->setUser($user); // Associate each education entry with the user
                 $em->persist($education);   // Persist each education entry, whether it's new or updated
+            }
+            foreach ($form->get('experience')->getData() as $experience) {
+                $experience->setUser($user); // Associate each education entry with the user
+                $em->persist($experience);   // Persist each education entry, whether it's new or updated
             }
             $em->persist($user);
             $em->flush();

@@ -2,46 +2,41 @@
 
 namespace App\Form;
 
-use App\Service\YearGeneratorService;
-use App\Entity\Education;
+use App\Entity\Experience;
 use App\Entity\user;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EducationType extends AbstractType
+class ExperienceType extends AbstractType
 {
-    private YearGeneratorService $yearGenerator;
-
-    public function __construct(YearGeneratorService $yearGenerator)
-    {
-        $this->yearGenerator = $yearGenerator;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('year', ChoiceType::class, [
+            ->add('company', TextType::class, [
                 'attr' => [
-                    'class' => 'form-select'
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('jobTitle', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('yearFrom', DateType::class, [
+                'widget' => 'single_text',
+                'attr' => [
+                    'class' => 'form-control'
                 ],
-                'label' => 'Year',
-                'required' => true,
-                'choices' => $this->yearGenerator->getYearsList(),
-                'placeholder' => 'Select a year',
             ])
-            ->add('university', TextType::class, [
+            ->add('toYear', DateType::class, [
+                'widget' => 'single_text',
                 'attr' => [
                     'class' => 'form-control'
-                ]
-            ])
-            ->add('degree', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
-                ]
+                ],
             ])
             ->add('user', EntityType::class, [
                 'class' => user::class,
@@ -53,7 +48,7 @@ class EducationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Education::class,
+            'data_class' => Experience::class,
         ]);
     }
 }

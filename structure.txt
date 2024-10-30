@@ -20,7 +20,23 @@ Les années d'expériences
 
 Applications :
 
-app_id
+*app_id
 user_id
 job_id
 applied_at
+
+Education :
+
+*id
+university
+degree
+year
+
+Experiences :
+
+*id
+company
+job title
+from
+to
+user_id

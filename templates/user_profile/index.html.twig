@@ -39,28 +39,55 @@
                         {{ form_widget(form.cv) }}
                     </div>
                         
-<div class="col-lg-12 mb-3">
-	<div class="educations">
-    <h1>Education</h1>
-		{% for education in form.education %}
-			<div class="education-entry">
-				{{ form_row(education.year, {'attr': {'class': 'form-select'}}) }}
-				{{ form_row(education.degree, {'attr': {'class': 'form-control'}}) }}
-				{{ form_row(education.university, {'attr': {'class': 'form-control'}}) }}
-				<button type="button" class="btn btn-danger remove-education">Remove</button>
-			</div>
-		{% endfor %}
+                    <div class="col-lg-12 mb-3">
+                        <div class="educations">
+                        <h1>Education</h1>
+                            {% for education in form.education %}
+                                <div class="education-entry">
+                                    
+                                    {{ form_row(education.year, {'attr': {'class': 'form-select'}}) }}
+                                    {{ form_row(education.degree, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_row(education.university, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            {% endfor %}
 
-		<!-- The prototype for new entries -->
-		<div class="education-entry">
-			{{ form_row(form.education.vars.prototype.year)}}
-			{{ form_row(form.education.vars.prototype.degree)}}
-			{{ form_row(form.education.vars.prototype.university)}}
-		</div>
+                            {% if not form.education %}                            
+                            <div class="education-entry">
+                                {{ form_row(form.education.vars.prototype.year)}}
+                                {{ form_row(form.education.vars.prototype.degree)}}
+                                {{ form_row(form.education.vars.prototype.university)}}
+                            </div>
+                            {% endif %}
+                            <button type="button" class="btn btn-success add-education">Add More</button>
+                        </div>
+                    </div>
 
-		<button type="button" class="btn btn-success add-education">Add More</button>
-	</div>
-</div>
+                    <div class="col-lg-12 mb-3">
+                        <div class="experiences">
+                            <h1>Experience</h1>
+                            {% for experience in form.experience %}
+                                <div class="experience-entry">
+                                    {{ form_row(experience.company, {'attr': {'class': 'form-select'}}) }}
+                                    {{ form_row(experience.jobTitle, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_row(experience.yearFrom, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_row(experience.toYear, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            {% endfor %}
+
+                            <!-- The prototype for new entries -->
+                            {% if not form.education %}
+                                <div class="experience-entry">
+                                    {{ form_row(form.experience.vars.prototype.company)}}
+                                    {{ form_row(form.experience.vars.prototype.jobTitle)}}
+                                    {{ form_row(form.experience.vars.prototype.yearFrom)}}
+                                    {{ form_row(form.experience.vars.prototype.toYear)}}
+                                </div>
+                            {% endif %}
+
+
+                            <button type="button" class="btn btn-success add-experience">Add More</button>
+                        </div>
+                    </div>
 
 
 </div>
@@ -132,6 +159,39 @@ dropdown.classList.remove("show");
             }
         });
     });
+
+
+     document.addEventListener('DOMContentLoaded', function () {
+        const experienceContainer = document.querySelector('.experiences');
+        const addExperienceButton = document.querySelector('.add-experience');
+
+        // Manually define the template for a new education entry in JavaScript
+        const createExperienceEntry = (index) => {
+            return `
+                <div class="experience-entry">
+                    <input type="text" name="form[experience][${index}][company]" placeholder="Company" class="form-control">
+                    <input type="text" name="form[experience][${index}][jobTitle]" placeholder="Job Title" class="form-control">
+                    <input type="date" name="form[experience][${index}][yearFrom]" placeholder="From" class="form-control">
+                    <input type="date" name="form[experience][${index}][toYear]" placeholder="To" class="form-control">
+                    <button type="button" class="btn btn-danger remove-experience">Remove</button>
+                </div>`;
+        };
+    
+        addExperienceButton.addEventListener('click', function () {
+            const index = experienceContainer.querySelectorAll('.experience-entry').length;
+            const newEntryHtml = createExperienceEntry(index);
+            experienceContainer.insertAdjacentHTML('beforeend', newEntryHtml);
+        });
+
+        // Event delegation to handle removing dynamically added fields
+        experienceContainer.addEventListener('click', function (event) {
+            if (event.target.classList.contains('remove-experience')) {
+                event.target.closest('.experience-entry').remove();
+            }
+        });
+    });
+
+
 	</script>
 {% endblock  %}
 
