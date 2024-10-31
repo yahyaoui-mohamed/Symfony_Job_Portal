@@ -44,9 +44,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $registered_at = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $telephone = null;
-
     /**
      * @var Collection<int, Applications>
      */
@@ -65,11 +62,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Experience::class, mappedBy: 'user')]
     private Collection $experiences;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $telephone = null;
+
+    /**
+     * @var Collection<int, Skill>
+     */
+    #[ORM\OneToMany(targetEntity: Skill::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $skills;
+
+    /**
+     * @var Collection<int, Saved>
+     */
+    #[ORM\OneToMany(targetEntity: Saved::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $saveds;
+
     public function __construct()
     {
         $this->applications = new ArrayCollection();
         $this->education = new ArrayCollection();
         $this->experiences = new ArrayCollection();
+        $this->skills = new ArrayCollection();
+        $this->saveds = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -181,18 +195,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getTelephone(): ?string
-    {
-        return $this->telephone;
-    }
-
-    public function setTelephone(string $telephone): static
-    {
-        $this->telephone = $telephone;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Applications>
      */
@@ -277,6 +279,78 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($experience->getUser() === $this) {
                 $experience->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): static
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Skill>
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): static
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills->add($skill);
+            $skill->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): static
+    {
+        if ($this->skills->removeElement($skill)) {
+            // set the owning side to null (unless already changed)
+            if ($skill->getUser() === $this) {
+                $skill->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Saved>
+     */
+    public function getSaveds(): Collection
+    {
+        return $this->saveds;
+    }
+
+    public function addSaved(Saved $saved): static
+    {
+        if (!$this->saveds->contains($saved)) {
+            $this->saveds->add($saved);
+            $saved->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSaved(Saved $saved): static
+    {
+        if ($this->saveds->removeElement($saved)) {
+            // set the owning side to null (unless already changed)
+            if ($saved->getUser() === $this) {
+                $saved->setUser(null);
             }
         }
 

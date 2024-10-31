@@ -1,0 +1,22 @@
+.job-wrapper {
+  .job-item {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 30px;
+    border-radius: 5px;
+
+    .job-type {
+      margin-top: 10px;
+
+      span {
+        background-color: green;
+        padding: 5px 10px;
+        color: #fff;
+        font-family: Montserrat;
+        border-radius: 8px;
+        font-size: 14px;
+      }
+
+    }
+
+  }
+}

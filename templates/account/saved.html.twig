@@ -8,9 +8,19 @@
 		<div class="admin">
 			{% include 'user_sidebar.html.twig' %}
 		</div>
-		<div class="col-lg-6">
-			<div class="content"></div>
-		</div>
+			<div class="content">
+				<div class="container">
+					<div class="row">
+						{% for app in apps %}
+							<div class="col-lg-4">
+								<div class="user-application">
+									<h4> {{app.job.name}} </h4>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
 	</div>
 
 

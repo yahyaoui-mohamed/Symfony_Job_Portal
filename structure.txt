@@ -1,7 +1,7 @@
 Users:
   Admin
   Recruteur
-  Demandeur d'emploi
+  User
 
 Le Recruteur peut ajouter une offre d'emploi en précisant :
 
@@ -10,6 +10,7 @@ La description,
 La localisation de l'offre
 Les langages / technologies demandées
 Les années d'expériences
+
 
 
 - Un test d'évaluation sera crée juste après la création d'une offre d'emploi qui est rélié à cette offre et à ce recruteur
@@ -39,4 +40,10 @@ company
 job title
 from
 to
+user_id
+
+Skills:
+
+*id
+skills
 user_id

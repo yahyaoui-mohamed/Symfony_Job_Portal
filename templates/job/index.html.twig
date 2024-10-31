@@ -1,70 +1,82 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Admin Dashboard
 {% endblock %}
-
 {% block body %}
 
-	<div class="row">
-		<div class="col-lg-2">
+	<div class="d-flex">
 			<div class="admin">
 				{% include 'recruiter_sidebar.html.twig' %}
 			</div>
+			<div class="content">
+				<div class="add-btn mb-3">
+					<a href="{{path("app_add_job")}}" class="btn btn-primary">Add new job</a>
+				</div>
+				<div class="job-wrapper">
+					<div class="row">
+						{% for job in jobs %}
+							<div class="col-lg-4">
+								<div class="job-item mb-3">
+									<h5>
+										{{job.name}}
+									</h5>
+									<p>
+										{{job.description}}
+									</p>
+									<div class="salary">
+									<span class="min-salary">
+										{{job.minsalary}}€
+									</span>
+									<span class="max-salary">
+										{{job.maxsalary}}€
+									</span>
+									</div>
+									<p class="job-type">
+										<span>
+											{{job.type}}
+										</span>
+									</p>
+									<div class="btns">
+										<a href="/job/edit/{{job.id}}" class="btn btn-primary">Edit</a>
+										<a href="/job/delete/{{job.id}}" class="btn btn-danger">Delete</a>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					
+					{# row #}
+					</div>
+
+
+			
 		</div>
 
-		<div class="col-lg-10">
-			<div class="content">
-			<div class="add-btn">
-				<a href="{{path("app_add_job")}}">Add new job</a>
-			</div>
-				<div class="job-wrapper">
-					{% for job in jobs %}
-						<div class="job-item">
-							<h1>
-							{{job.name}}
-							</h1>
-							<p>
-								{{job.description}}
-							</p>
-							<div>
-								{{job.minsalary}}€ - 
-								{{job.maxsalary}}€ |
-							</div>
-							<p>
-								{{job.type}}
-							</p>
-							<div class="btns">
-								<a href="/job/edit/{{job.id}}">Edit</a>
-								<a href="/job/delete/{{job.id}}">Delete</a>
-							</div>
-						</div>
-					{% endfor %}
 
-				</div>
 		</div>
 	</div>
 
+	{% endblock %}
+	{% block js %}
+		<script>
+		
+			let dropdown = document.querySelector(".account-dropdown");
+			let avatar = document.querySelector(".avatar");
+			let account = document.querySelector(".account");
 
-{% endblock %}
-{% block js %}
-	<script>
-		let dropdown = document.querySelector(".account-dropdown");
-let avatar = document.querySelector(".avatar");
-let account = document.querySelector(".account");
-avatar.addEventListener("click", function () {
-if (dropdown.classList.contains("show")) {
-dropdown.classList.remove("show");
-} else {
-dropdown.classList.add("show");
-}
-});
+			avatar.addEventListener("click", function () {
+				if (dropdown.classList.contains("show")) {
+					dropdown.classList.remove("show");
+				} else {
+					dropdown.classList.add("show");
+				}
+			});
 
-document.addEventListener("click", function (e) {
-if (dropdown.classList.contains("show")) {
-if (! account.contains(e.target)) {
-dropdown.classList.remove("show");
-}
-}
-});
-	</script>
-{% endblock  %}
+			document.addEventListener("click", function (e) {
+				if (dropdown.classList.contains("show")) {
+					if (!account.contains(e.target)) {
+						dropdown.classList.remove("show");
+					}
+				}
+			});
+
+		</script>
+	{% endblock  %}

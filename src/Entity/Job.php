@@ -45,9 +45,16 @@ class Job
     #[ORM\Column]
     private ?bool $available = null;
 
+    /**
+     * @var Collection<int, Saved>
+     */
+    #[ORM\OneToMany(targetEntity: Saved::class, mappedBy: 'job', orphanRemoval: true)]
+    private Collection $saveds;
+
     public function __construct()
     {
         $this->applications = new ArrayCollection();
+        $this->saveds = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -177,6 +184,36 @@ class Job
     public function setAvailable(bool $available): static
     {
         $this->available = $available;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Saved>
+     */
+    public function getSaveds(): Collection
+    {
+        return $this->saveds;
+    }
+
+    public function addSaved(Saved $saved): static
+    {
+        if (!$this->saveds->contains($saved)) {
+            $this->saveds->add($saved);
+            $saved->setJob($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSaved(Saved $saved): static
+    {
+        if ($this->saveds->removeElement($saved)) {
+            // set the owning side to null (unless already changed)
+            if ($saved->getJob() === $this) {
+                $saved->setJob(null);
+            }
+        }
 
         return $this;
     }

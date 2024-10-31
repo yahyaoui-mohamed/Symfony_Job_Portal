@@ -1,20 +1,17 @@
 <div class="col-lg-6">
+	
+	
 	<div class="side-bar">
 		<ul>
-      <li>
-
-        <a class={% if path("app_recruiter") %} {{"active"}} {% endif %} href="{{path("app_recruiter")}}">Home</a>
-      </li>
-    
-      <li>
-        <a class={% if path("app_job") %} {{"active"}} {% endif %} href="{{path("app_job")}}">My Jobs</a>
-      </li>
-
+			<li><a href="{{path("app_recruiter")}}">Home</a></li>
+			<li><a href="{{path("app_job")}}">My Jobs</a></li>
 			<li><a href="#">Interview</a></li>
 			<li><a href="#">Applications</a></li>
-	
-    </ul>
+		</ul>
 	</div>
+
+
+
 	<div class="upper-nav">
 		<div class="row">
 			<div class="col-lg-10">
@@ -43,9 +40,9 @@
 								<a href="{{path("app_logout")}}">Logout</a>
 							</li>
 						</div>
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>

@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Applications;
 use App\Form\EducationType;
 use App\Form\ExperienceType;
+use App\Repository\ApplicationsRepository;
+use App\Form\SkillType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -27,21 +30,32 @@ class AccountController extends AbstractController
     }
 
     #[Route('/user/applications', name: 'app_account_applications')]
-    public function applications(): Response
+    public function applications(EntityManagerInterface $em): Response
     {
         if (!in_array("ROLE_USER", $this->getUser()->getRoles())) {
             return $this->redirectToRoute(("app_index"));
         }
-        return $this->render('account/applications.html.twig', []);
+
+        $repository = $em->getRepository(Applications::class);
+        $apps = $repository->findBy(['user' => $this->getUser()->getId()]);
+
+        return $this->render('account/applications.html.twig', [
+            'apps' => $apps
+        ]);
     }
 
     #[Route('/user/saved', name: 'app_account_saved')]
-    public function saved(): Response
+    public function saved(EntityManagerInterface $em): Response
     {
         if (!in_array("ROLE_USER", $this->getUser()->getRoles())) {
             return $this->redirectToRoute(("app_index"));
         }
-        return $this->render('account/saved.html.twig', []);
+
+        $repository = $em->getRepository(Applications::class);
+        $apps = $repository->findBy(['user' => $this->getUser()->getId()]);
+        return $this->render('account/saved.html.twig', [
+            'apps' => $apps
+        ]);
     }
 
 
@@ -102,6 +116,16 @@ class AccountController extends AbstractController
                 'prototype_name' => '__name__',
                 'data' => $user->getExperiences(), // Pass existing education data
             ])
+            ->add("skill", CollectionType::class, [
+                'entry_type' => SkillType::class, // Add your EducationType form here
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'label' => 'Education',
+                'prototype' => true,
+                'prototype_name' => '__name__',
+                'data' => $user->getSkills(), // Pass existing education data
+            ])
             ->add("save", SubmitType::class, [
                 'attr' => [
                     "class" => 'btn btn-primary'
@@ -111,6 +135,7 @@ class AccountController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            dd($form->getData());
             foreach ($form->get('education')->getData() as $education) {
                 $education->setUser($user); // Associate each education entry with the user
                 $em->persist($education);   // Persist each education entry, whether it's new or updated
