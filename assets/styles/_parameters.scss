@@ -1,0 +1,23 @@
+.avatar {
+  width: 200px;
+  height: 200px;
+  background-color: #ccc;
+  position: relative;
+
+  #fileInput {
+    display: none;
+  }
+
+  span {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    border: none;
+    background-color: #fff;
+    color: #000;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 5px 8px;
+    font-family: Montserrat;
+  }
+}

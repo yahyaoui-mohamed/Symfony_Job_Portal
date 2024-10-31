@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	My Applications
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+	<div class="row">
+		<div class="admin">
+			{% include 'user_sidebar.html.twig' %}
+		</div>
+
+		<div class="content">
+      {{ form_start(form) }}
+      <h1>Parameters</h1>
+
+        <div class="avatar mb-3">
+          <img src="" alt="">
+          <input type="file" class="change-avatar" id="fileInput"/>
+          <span id="changeButton">Change</span>
+        </div>
+
+        {{ form_row(form.newPassword, {'attr': {
+          'class' : 'form-control mb-3'
+        }}) }}
+        {{ form_row(form.confirmPassword, {'attr': {
+          'class' : 'form-control mb-3'
+        }}) }}
+        {{ form_row(form.save, {'attr': {
+          'class' : 'btn btn-primary mb-3'
+        }}) }}
+
+
+    {{ form_end(form) }}
+    </div>
+
+	</div>
+</div>
+
+
+
+{% endblock %}
+{% block js %}
+	<script>
+		let dropdown = document.querySelector(".account-dropdown");
+    let account = document.querySelector(".account");
+    let avatar = document.querySelector(".avatar");
+
+avatar.addEventListener("click", function () {
+if (dropdown.classList.contains("show")) {
+dropdown.classList.remove("show");
+} else {
+dropdown.classList.add("show");
+}
+});
+
+document.addEventListener("click", function (e) {
+if (dropdown.classList.contains("show")) {
+if (! account.contains(e.target)) {
+dropdown.classList.remove("show");
+}
+}
+});
+
+
+const fileInput = document.getElementById("fileInput");
+        const changeButton = document.getElementById("changeButton");
+
+        // Add a click event listener to the button
+        changeButton.addEventListener("click", () => {
+            // Trigger the click event on the hidden file input
+            fileInput.click();
+        });
+
+	</script>
+{% endblock  %}
+

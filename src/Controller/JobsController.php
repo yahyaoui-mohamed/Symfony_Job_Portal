@@ -27,7 +27,7 @@ class JobsController extends AbstractController
 
         $numOfJobs = count($allJobs);
 
-        return $this->render('jobs/index.html.twig', [
+        return $this->render('Index/jobs/index.html.twig', [
             'jobs' => $jobs,
             'jobsCount' => $numOfJobs
         ]);
@@ -38,7 +38,7 @@ class JobsController extends AbstractController
     {
         $job = $em->getRepository(Job::class)->find($id);
 
-        return $this->render('jobs/jobpage.html.twig', [
+        return $this->render('Index/jobs/jobpage.html.twig', [
             'job' => $job
         ]);
     }

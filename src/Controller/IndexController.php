@@ -45,7 +45,7 @@ class IndexController extends AbstractController
     //   if (in_array("ROLE_ADMIN", $this->getUser()->getRoles())) {
     //   }
     // }
-    return $this->render("index.html.twig", [
+    return $this->render("Index/index.html.twig", [
       'form' => $form->createView()
     ]);
   }

@@ -77,6 +77,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Saved::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $saveds;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $user_avatar = null;
+
     public function __construct()
     {
         $this->applications = new ArrayCollection();
@@ -353,6 +356,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $saved->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserAvatar(): ?string
+    {
+        return $this->user_avatar;
+    }
+
+    public function setUserAvatar(?string $user_avatar): static
+    {
+        $this->user_avatar = $user_avatar;
 
         return $this;
     }

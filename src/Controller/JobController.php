@@ -16,7 +16,7 @@ class JobController extends AbstractController
     public function index(EntityManagerInterface $em): Response
     {
         $jobs = $em->getRepository(Job::class)->findAll();
-        return $this->render('job/index.html.twig', [
+        return $this->render('Recruiter/job/index.html.twig', [
             'jobs' => $jobs
         ]);
     }
@@ -32,7 +32,7 @@ class JobController extends AbstractController
             $em->flush();
             return $this->redirectToRoute("app_add_job");
         }
-        return $this->render('job/add.html.twig', [
+        return $this->render('Recruiter/job/add.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -49,7 +49,7 @@ class JobController extends AbstractController
             // Add flash message
             return $this->redirectToRoute("app_edit_job", ['id' => $id]);
         }
-        return $this->render('job/edit.html.twig', [
+        return $this->render('Recruiter/job/edit.html.twig', [
             'form' => $form->createView(),
             'job' => $job
         ]);
@@ -62,5 +62,19 @@ class JobController extends AbstractController
         $em->remove($job);
         $em->flush();
         return $this->redirectToRoute("app_job");
+    }
+
+    #[Route('/job/application', name: 'app_apps_job')]
+    public function applications(Request $request, EntityManagerInterface $em): Response
+    {
+
+        return $this->render('Recruiter/applications.html.twig');
+    }
+
+    #[Route('/job/interview', name: 'app_interviews_job')]
+    public function interviews(Request $request, EntityManagerInterface $em): Response
+    {
+
+        return $this->render('Recruiter/interviews.html.twig');
     }
 }

@@ -20,7 +20,7 @@ class JobApplyController extends AbstractController
     #[Route('/job/apply/{id}', name: 'app_job_apply')]
     public function index($id, Request $request, EntityManagerInterface $em): Response
     {
-        if(!$this->getUser()){
+        if (!$this->getUser()) {
             $request->getSession()->set('previous_route', 'app_job_apply');
             return $this->redirectToRoute("app_login");
         }
@@ -71,7 +71,7 @@ class JobApplyController extends AbstractController
             $em->flush();
             return $this->redirectToRoute("app_job_apply", ['id' => $id]);
         }
-        return $this->render('job_apply/index.html.twig', [
+        return $this->render('Index/job_apply/index.html.twig', [
             'form' => $form->createView()
         ]);
     }

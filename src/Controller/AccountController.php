@@ -2,68 +2,34 @@
 
 namespace App\Controller;
 
-use App\Entity\Applications;
 use App\Entity\Saved;
-use App\Form\EducationType;
-use App\Form\ExperienceType;
-use App\Repository\ApplicationsRepository;
 use App\Form\SkillType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\Request;
+use App\Form\EducationType;
+use App\Entity\Applications;
+use App\Form\ExperienceType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class AccountController extends AbstractController
 {
     #[Route('/user', name: 'app_account')]
-    public function index(): Response
-    {
-        if (!in_array("ROLE_USER", $this->getUser()->getRoles())) {
-            return $this->redirectToRoute(("app_index"));
-        }
-        return $this->render('account/index.html.twig', []);
-    }
-
-    #[Route('/user/applications', name: 'app_account_applications')]
-    public function applications(EntityManagerInterface $em): Response
+    public function index(Request $request, EntityManagerInterface $em): Response
     {
         if (!in_array("ROLE_USER", $this->getUser()->getRoles())) {
             return $this->redirectToRoute(("app_index"));
         }
 
-        $repository = $em->getRepository(Applications::class);
-        $apps = $repository->findBy(['user' => $this->getUser()->getId()]);
-
-        return $this->render('account/applications.html.twig', [
-            'apps' => $apps
-        ]);
-    }
-
-    #[Route('/user/saved', name: 'app_account_saved')]
-    public function saved(EntityManagerInterface $em): Response
-    {
-        if (!in_array("ROLE_USER", $this->getUser()->getRoles())) {
-            return $this->redirectToRoute(("app_index"));
-        }
-
-        $repository = $em->getRepository(Saved::class);
-        $apps = $repository->findBy(['user' => $this->getUser()->getId()]);
-        return $this->render('account/saved.html.twig', [
-            'apps' => $apps
-        ]);
-    }
-
-
-    #[Route('/user/profile', name: 'app_user_profile')]
-    public function profile(Request $request, EntityManagerInterface $em): Response
-    {
         $user = $this->getUser();
+
         $form = $this->createFormBuilder()
             ->add("firstname", TextType::class, [
                 'attr' => [
@@ -98,34 +64,32 @@ class AccountController extends AbstractController
                 'required' => false
             ],)
             ->add("education", CollectionType::class, [
-                'entry_type' => EducationType::class, // Add your EducationType form here
+                'entry_type' => EducationType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
-                'label' => 'Education',
                 'prototype' => true,
                 'prototype_name' => '__name__',
-                'data' => $user->getEducation(), // Pass existing education data
+                'data' => $user->getEducation(),
             ])
             ->add("experience", CollectionType::class, [
-                'entry_type' => ExperienceType::class, // Add your EducationType form here
+                'entry_type' => ExperienceType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
-                'label' => 'Education',
                 'prototype' => true,
                 'prototype_name' => '__name__',
-                'data' => $user->getExperiences(), // Pass existing education data
+                'data' => $user->getExperiences(),
             ])
             ->add("skill", CollectionType::class, [
-                'entry_type' => SkillType::class, // Add your EducationType form here
+                'entry_type' => SkillType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
-                'label' => 'Education',
+                'label' => false,
                 'prototype' => true,
                 'prototype_name' => '__name__',
-                'data' => $user->getSkills(), // Pass existing education data
+                'data' => $user->getSkills(),
             ])
             ->add("save", SubmitType::class, [
                 'attr' => [
@@ -135,23 +99,74 @@ class AccountController extends AbstractController
             ->getForm();
 
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($form->getData());
             foreach ($form->get('education')->getData() as $education) {
-                $education->setUser($user); // Associate each education entry with the user
-                $em->persist($education);   // Persist each education entry, whether it's new or updated
+                $education->setUser($user);
+                $em->persist($education);
             }
             foreach ($form->get('experience')->getData() as $experience) {
-                $experience->setUser($user); // Associate each education entry with the user
-                $em->persist($experience);   // Persist each education entry, whether it's new or updated
+                $experience->setUser($user);
+                $em->persist($experience);
             }
+
             $em->persist($user);
             $em->flush();
-            return $this->redirectToRoute("app_user_profile");
+            return $this->redirectToRoute("app_account");
         }
-        return $this->render('user_profile/index.html.twig', [
+        return $this->render('User/index.html.twig', [
             'form' => $form->createView(),
             'user' => $user,
+        ]);
+    }
+
+    #[Route('/user/applications', name: 'app_account_applications')]
+    public function applications(EntityManagerInterface $em): Response
+    {
+        if (!in_array("ROLE_USER", $this->getUser()->getRoles())) {
+            return $this->redirectToRoute(("app_index"));
+        }
+
+        $repository = $em->getRepository(Applications::class);
+        $apps = $repository->findBy(['user' => $this->getUser()->getId()]);
+
+        return $this->render('User/applications.html.twig', [
+            'apps' => $apps
+        ]);
+    }
+
+    #[Route('/user/saved', name: 'app_account_saved')]
+    public function saved(EntityManagerInterface $em): Response
+    {
+        if (!in_array("ROLE_USER", $this->getUser()->getRoles())) {
+            return $this->redirectToRoute(("app_index"));
+        }
+
+        $repository = $em->getRepository(Saved::class);
+        $apps = $repository->findBy(['user' => $this->getUser()->getId()]);
+        return $this->render('User/saved.html.twig', [
+            'apps' => $apps
+        ]);
+    }
+
+    #[Route('/user/parameters', name: 'app_account_parameters')]
+    public function parameters(Request $request, EntityManagerInterface $em): Response
+    {
+        if (!in_array("ROLE_USER", $this->getUser()->getRoles())) {
+            return $this->redirectToRoute(("app_index"));
+        }
+        $form = $this->createFormBuilder()
+            ->add("newPassword", PasswordType::class)
+            ->add("confirmPassword", PasswordType::class)
+            ->add("save", SubmitType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+        }
+        return $this->render('User/parameters.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 }

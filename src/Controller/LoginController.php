@@ -27,7 +27,7 @@ class LoginController extends AbstractController
             // Fallback to a default route if no previous route is stored
         }
 
-        return $this->render('security/login.html.twig');
+        return $this->render('Login/login.html.twig');
     }
 
     #[Route(path: '/logout', name: 'app_logout')]

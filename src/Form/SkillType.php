@@ -21,14 +21,14 @@ class SkillType extends AbstractType
                     'HTML' => 'HTML',
                     'CSS' => 'CSS',
                     'Javascript' => 'Javascript',
+                    'PHP' => 'PHP',
+                    'Sass' => 'Sass',
+                    'jQuery' => 'jQuery',
+                    'Javascript' => 'Javascript',
                 ],
-                'multiple' => true, // Allow multiple selections
-            ])
-            ->add('user', EntityType::class, [
-                'class' => user::class,
-                'choice_label' => 'id',
-            ])
-        ;
+                'multiple' => true,
+                'expanded' => true // Allow multiple selections
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
