@@ -27,20 +27,14 @@ class ExperienceType extends AbstractType
                 ]
             ])
             ->add('yearFrom', DateType::class, [
-                'widget' => 'single_text',
                 'attr' => [
                     'class' => 'form-control'
                 ],
             ])
             ->add('toYear', DateType::class, [
-                'widget' => 'single_text',
                 'attr' => [
                     'class' => 'form-control'
                 ],
-            ])
-            ->add('user', EntityType::class, [
-                'class' => user::class,
-                'choice_label' => 'id',
             ])
         ;
     }

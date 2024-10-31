@@ -28,7 +28,6 @@ class EducationType extends AbstractType
                 'attr' => [
                     'class' => 'form-select'
                 ],
-                'label' => 'Year',
                 'required' => true,
                 'choices' => $this->yearGenerator->getYearsList(),
                 'placeholder' => 'Select a year',
@@ -38,14 +37,16 @@ class EducationType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('degree', TextType::class, [
+            ->add('degree', ChoiceType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-select'
+                ],
+                'choices' => [
+                    'High School' => 'high school',
+                    'Bachelor Degree' => 'dachelor degree',
+                    'Master Degree' => 'master degree',
+                    'PhD' => 'phd'
                 ]
-            ])
-            ->add('user', EntityType::class, [
-                'class' => user::class,
-                'choice_label' => 'id',
             ])
         ;
     }

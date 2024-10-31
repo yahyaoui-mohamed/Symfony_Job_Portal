@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Applications;
+use App\Entity\Saved;
 use App\Form\EducationType;
 use App\Form\ExperienceType;
 use App\Repository\ApplicationsRepository;
@@ -51,7 +52,7 @@ class AccountController extends AbstractController
             return $this->redirectToRoute(("app_index"));
         }
 
-        $repository = $em->getRepository(Applications::class);
+        $repository = $em->getRepository(Saved::class);
         $apps = $repository->findBy(['user' => $this->getUser()->getId()]);
         return $this->render('account/saved.html.twig', [
             'apps' => $apps
