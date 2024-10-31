@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Applications;
 use App\Entity\Job;
 use App\Form\JobType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -67,8 +68,11 @@ class JobController extends AbstractController
     #[Route('/job/application', name: 'app_apps_job')]
     public function applications(Request $request, EntityManagerInterface $em): Response
     {
+        $apps = $this->getUser()->getRecruiterApps();
 
-        return $this->render('Recruiter/applications.html.twig');
+        return $this->render('Recruiter/applications.html.twig', [
+            'apps' => $apps
+        ]);
     }
 
     #[Route('/job/interview', name: 'app_interviews_job')]

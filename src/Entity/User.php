@@ -80,6 +80,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $user_avatar = null;
 
+    /**
+     * @var Collection<int, Job>
+     */
+    #[ORM\OneToMany(targetEntity: Job::class, mappedBy: 'recruiter', orphanRemoval: true)]
+    private Collection $jobs;
+
+    /**
+     * @var Collection<int, Applications>
+     */
+    #[ORM\OneToMany(targetEntity: Applications::class, mappedBy: 'recruiter', orphanRemoval: true)]
+    private Collection $recruiterApps;
+
     public function __construct()
     {
         $this->applications = new ArrayCollection();
@@ -87,6 +99,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->experiences = new ArrayCollection();
         $this->skills = new ArrayCollection();
         $this->saveds = new ArrayCollection();
+        $this->jobs = new ArrayCollection();
+        $this->recruiterApps = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -368,6 +382,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUserAvatar(?string $user_avatar): static
     {
         $this->user_avatar = $user_avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Job>
+     */
+    public function getJobs(): Collection
+    {
+        return $this->jobs;
+    }
+
+    public function addJob(Job $job): static
+    {
+        if (!$this->jobs->contains($job)) {
+            $this->jobs->add($job);
+            $job->setRecruiter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJob(Job $job): static
+    {
+        if ($this->jobs->removeElement($job)) {
+            // set the owning side to null (unless already changed)
+            if ($job->getRecruiter() === $this) {
+                $job->setRecruiter(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Applications>
+     */
+    public function getRecruiterApps(): Collection
+    {
+        return $this->recruiterApps;
+    }
+
+    public function addRecruiterApp(Applications $recruiterApp): static
+    {
+        if (!$this->recruiterApps->contains($recruiterApp)) {
+            $this->recruiterApps->add($recruiterApp);
+            $recruiterApp->setRecruiter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecruiterApp(Applications $recruiterApp): static
+    {
+        if ($this->recruiterApps->removeElement($recruiterApp)) {
+            // set the owning side to null (unless already changed)
+            if ($recruiterApp->getRecruiter() === $this) {
+                $recruiterApp->setRecruiter(null);
+            }
+        }
 
         return $this;
     }

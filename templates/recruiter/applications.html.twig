@@ -4,13 +4,20 @@
 
 {% block body %}
 
-	<div class="row">
+	<div class="d-flex">
 		<div class="admin">
 			{% include 'recruiter_sidebar.html.twig' %}
 		</div>
-		<div class="col-lg-6">
-			<div class="content"></div>
-		</div>
+			<div class="content">
+				<div class="row">
+				{% for app in apps %}
+				<div class="col-lg-4">
+					{{app.job.name}}
+					{{app.user.nom}}
+				</div>
+				{% endfor %}
+				</div>
+			</div>
 	</div>
 
 {% endblock %}

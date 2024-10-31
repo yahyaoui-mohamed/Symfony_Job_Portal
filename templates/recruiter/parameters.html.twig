@@ -12,7 +12,15 @@
 			</div>
 		</div>
 		<div class="col-lg-10">
-			<div class="content"></div>
+			<div class="container">
+				<div class="content">
+					{{ form_start(form) }}
+					{{ form_row(form.newPassword,{'attr':{'class':'form-control mb-3'}}) }}
+					{{ form_row(form.confirmPassword,{'attr':{'class':'form-control mb-3'}}) }}
+					{{ form_row(form.save,{'attr':{'class':'btn btn-primary'}}) }}
+					{{ form_end(form) }}
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -40,3 +48,4 @@ dropdown.classList.remove("show");
 });
 	</script>
 {% endblock  %}
+

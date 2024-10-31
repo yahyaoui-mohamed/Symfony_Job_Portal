@@ -30,6 +30,10 @@ class Applications
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $cover_letter = null;
 
+    #[ORM\ManyToOne(inversedBy: 'recruiterApps')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?user $recruiter = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +95,18 @@ class Applications
     public function setCoverLetter(?string $cover_letter): static
     {
         $this->cover_letter = $cover_letter;
+
+        return $this;
+    }
+
+    public function getRecruiter(): ?user
+    {
+        return $this->recruiter;
+    }
+
+    public function setRecruiter(?user $recruiter): static
+    {
+        $this->recruiter = $recruiter;
 
         return $this;
     }

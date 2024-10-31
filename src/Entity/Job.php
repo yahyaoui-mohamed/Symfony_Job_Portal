@@ -51,6 +51,10 @@ class Job
     #[ORM\OneToMany(targetEntity: Saved::class, mappedBy: 'job', orphanRemoval: true)]
     private Collection $saveds;
 
+    #[ORM\ManyToOne(inversedBy: 'jobs')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $recruiter = null;
+
     public function __construct()
     {
         $this->applications = new ArrayCollection();
@@ -214,6 +218,18 @@ class Job
                 $saved->setJob(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRecruiter(): ?user
+    {
+        return $this->recruiter;
+    }
+
+    public function setRecruiter(?user $recruiter): static
+    {
+        $this->recruiter = $recruiter;
 
         return $this;
     }

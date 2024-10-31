@@ -45,7 +45,7 @@ class JobApplyController extends AbstractController
             $cover = $form->get('coverletter')->getData();
 
             $job = $em->getRepository(Job::class)->find($id);
-
+            dd($job->getRecruiter()->getId());
             $app = new Applications();
             $app->setUser($this->getUser());
             $app->setJob($job);
