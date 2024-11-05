@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AccountController extends AbstractController
 {
@@ -71,6 +72,7 @@ class AccountController extends AbstractController
                 'prototype' => true,
                 'prototype_name' => '__name__',
                 'data' => $user->getEducation(),
+                'label' => false
             ])
             ->add("experience", CollectionType::class, [
                 'entry_type' => ExperienceType::class,
@@ -109,7 +111,19 @@ class AccountController extends AbstractController
                 $experience->setUser($user);
                 $em->persist($experience);
             }
+            foreach ($form->get('skill')->getData() as $skill) {
+                $skill->setUser($user);
+                $em->persist($skill);
+            }
 
+            $cv = $form->get('cv')->getData();
+            $cvFilename = uniqid() . '.' . $cv->guessExtension();
+            $cv->move(
+                $this->getParameter('cv_directory'),
+                $cvFilename
+            );
+
+            $user->setCV($cvFilename);
             $em->persist($user);
             $em->flush();
             return $this->redirectToRoute("app_account");
@@ -129,7 +143,6 @@ class AccountController extends AbstractController
 
         $repository = $em->getRepository(Applications::class);
         $apps = $repository->findBy(['user' => $this->getUser()->getId()]);
-
         return $this->render('User/applications.html.twig', [
             'apps' => $apps
         ]);
@@ -150,23 +163,53 @@ class AccountController extends AbstractController
     }
 
     #[Route('/user/parameters', name: 'app_account_parameters')]
-    public function parameters(Request $request, EntityManagerInterface $em): Response
+    public function parameters(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
     {
         if (!in_array("ROLE_USER", $this->getUser()->getRoles())) {
             return $this->redirectToRoute(("app_index"));
         }
+        $user = $this->getUser();
         $form = $this->createFormBuilder()
-            ->add("newPassword", PasswordType::class)
-            ->add("confirmPassword", PasswordType::class)
+            ->add("avatar", FileType::class, [
+                'required' => false,
+                'attr' => [
+                    'id' => 'fileInput'
+                ],
+                'label' => false
+            ])
+            ->add("newPassword", PasswordType::class, [
+                'required' => false
+            ])
+            ->add("confirmPassword", PasswordType::class, [
+                'required' => false
+            ])
             ->add("save", SubmitType::class)
             ->getForm();
 
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            
+            $data = $form->getData();
+            if ($data["avatar"]) {
+                $avatar = $form->get('avatar')->getData();
+                $avatarName = uniqid() . '.' . $avatar->guessExtension();
+                $avatar->move(
+                    $this->getParameter('avatar_directory'),
+                    $avatarName
+                );
+                $user->setUserAvatar($avatarName);
+            }
+            if ($data["newPassword"]) {
+                $password = $passwordHasher->hashPassword($user, $data["newPassword"]);
+                $user->setPassword($data["avatar"]);
+            }
+            $em->persist($user);
+            $em->flush();
+            return $this->redirectToRoute("app_account_parameters");
         }
         return $this->render('User/parameters.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'user' => $this->getUser(),
         ]);
     }
 }

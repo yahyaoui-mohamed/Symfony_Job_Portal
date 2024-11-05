@@ -4,6 +4,7 @@
 parameters:
     cv_directory: '%kernel.project_dir%/public/uploads/cvs'
     coverletter_directory: '%kernel.project_dir%/public/uploads/coverletters'
+    avatar_directory: '%kernel.project_dir%/public/avatars'
 
 services:
     # default configuration for services in *this* file

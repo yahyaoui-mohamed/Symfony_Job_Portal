@@ -20,3 +20,82 @@
 
   }
 }
+
+.dashboard {
+  margin-left: 100px;
+  margin-top: 100px;
+
+  .application {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+    .user-info {
+      padding: 20px 10px;
+    }
+
+    .user-img {
+      text-align: center;
+      padding: 10px 0;
+
+      img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+    }
+
+    .options {
+      position: relative;
+
+      .dropdown {
+        cursor: pointer;
+      }
+
+      padding: 20px 10px;
+    }
+
+
+    .option-menu {
+      position: absolute;
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      width: 100px;
+      background-color: #fff;
+      padding: 10px;
+      left: 18px;
+      top: 50px;
+      z-index: 2;
+      display: none;
+
+      &.show {
+        display: block;
+      }
+
+      a {
+        text-decoration: none;
+        font-size: 12px;
+        display: block;
+        margin-bottom: 5px;
+        color: #6b6966;
+        transition: .3s;
+
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
+
+        &:hover {
+          color: #000;
+        }
+
+        i {
+          margin-right: 5px;
+          margin-top: 2px;
+        }
+      }
+    }
+
+    .user-info {
+      p {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

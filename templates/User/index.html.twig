@@ -1,244 +1,335 @@
 {% extends 'base.html.twig' %}
-{% block title %}Profile
-{% endblock %}
+{% block title %} Profile {% endblock %}
+
 {% block body %}
-	<div class="row">
-		
 		
 		<div class="admin">
 			{% include 'user_sidebar.html.twig' %}
 		</div>
 		
 		
-		<div class="col-lg-10">
-			<div class="content">
-		
-				<h1>Profile</h1>
-		
-				{{ form_start(form) }}
-		
-				<div class="profile mb-3">
-					<div class="row">
-						<div class="col-lg-6 mb-3">
-							{{ form_widget(form.firstname, {'attr': {'value' : user.nom }}) }}
-						</div>
-						<div class="col-lg-6 mb-3">
-							{{ form_widget(form.lastname, {'attr': { 'value' : user.prenom }}) }}
-						</div>
-						<div class="col-lg-6 mb-3">
-							{{ form_widget(form.email, {'attr': { 'value' : user.email }}) }}
-						</div>
-						<div class="col-lg-6 mb-3">
-							{{ form_widget(form.phone, {'attr': { 'value' : user.telephone }}) }}
-						</div>
-						<div class="col-lg-12 mb-3">
-							{{ form_widget(form.cv) }}
+			<div class="container">
+				<div class="content">
+			
+					<h1 class="mb-3">Profile</h1>
+			
+					{{ form_start(form) }}
+			
+					<div class="profile mb-5">
+						<div class="row">
+							<div class="col-lg-6 mb-3">
+								{{ form_widget(form.firstname, {'attr': {'value' : user.nom }}) }}
+							</div>
+							<div class="col-lg-6 mb-3">
+								{{ form_widget(form.lastname, {'attr': { 'value' : user.prenom }}) }}
+							</div>
+							<div class="col-lg-6 mb-3">
+								{{ form_widget(form.email, {'attr': { 'value' : user.email }}) }}
+							</div>
+							<div class="col-lg-6 mb-3">
+								{{ form_widget(form.phone, {'attr': { 'value' : user.telephone }}) }}
+							</div>
+							<div class="col-lg-12 mb-3">
+								<label for="form_cv" id="upload_cv">
+									<i class="fi fi-rr-upload"></i>
+									Upload Your CV
+								</label>
+								{{ form_widget(form.cv) }}
+							</div>
 						</div>
 					</div>
-				</div>
 
 
-				<div class="col-lg-12 mb-5">
-				
-					<div class="educations">
-				
-						<h1>Education</h1>
-				
-						<button type="button" class="btn btn-success add-education mb-3">Add More</button>
-				
-						{% for education in form.education %}
-							<div class="education-entry">
-								{{ form_row(education.year, {'attr': {'class': 'form-select'}}) }}
-								{{ form_row(education.degree, {'attr': {'class': 'form-select'}}) }}
-								{{ form_row(education.university, {'attr': {'class': 'form-control'}}) }}
-							</div>
-				
-						{% endfor %}
-						{% if form.education|length == 0 %}
-				
-							<div class="education-entry">
-								{{ form_row(form.education.vars.prototype.year)}}
-								{{ form_row(form.education.vars.prototype.degree)}}
-								{{ form_row(form.education.vars.prototype.university)}}
-							</div>
-				
-						{% endif %}
+					<div class="col-lg-12 mb-5">
+					
+						<div class="educations">
+							<div class="d-flex justify-content-between align-items-center">
+								<h1 class="mb-3">Education</h1>
+								<button type="button" class="btn add-more add-education mb-3"><i class="fi fi-rr-plus-small"></i> Add More</button>
+							</div>					
+					
+							{% for education in form.education %}
+								<div class="education-entry mb-5">
+									<div class="row">
+										<div class="col-lg-6">
+												{{ form_row(education.year, {'attr': {'class': 'form-select mb-3'}}) }}
+										</div>
+
+										<div class="col-lg-6">
+											{{ form_row(education.degree, {'attr': {'class': 'form-select mb-3'}}) }}
+										</div>
+
+										<div class="col-lg-12">
+												{{ form_row(education.university, {'attr': {'class': 'form-control'}}) }}
+										</div>
+
+									</div>
+								</div>
+					
+							{% endfor %}
+							{% if form.education|length == 0 %}
+					
+								<div class="education-entry mb-5">
+									{{ form_row(form.education.vars.prototype.year)}}
+									{{ form_row(form.education.vars.prototype.degree)}}
+									{{ form_row(form.education.vars.prototype.university)}}
+								</div>
+					
+							{% endif %}
+						</div>
 					</div>
-				</div>
 
 
-				<div class="col-lg-12 mb-5">
-					<div class="experiences">
-						<h1>Experience</h1>
-						<button type="button" class="btn btn-success add-experience mb-3">Add More</button>
-						{% for experience in form.experience %}
-							<div class="experience-entry mb-3">
-								<div class="row">
-									<div class="col-lg-6">
-										{{ form_row(experience.company, {'attr': {'class': 'form-control'}}) }}
-									</div>
-									<div class="col-lg-6">
-										{{ form_row(experience.jobTitle, {'attr': {'class': 'form-control'}}) }}
-									</div>
-									<div class="col-lg-6">
-										{{ form_row(experience.yearFrom, {'attr': {'class': 'form-control'}}) }}
-									</div>
-									<div class="col-lg-6">
-										{{ form_row(experience.toYear, {'attr': {'class': 'form-control'}}) }}
-									</div>
+					<div class="col-lg-12 mb-5">
+						<div class="experiences">
+							<div class="d-flex justify-content-between align-items-center">
+								<h1 class="mb-3">Experience</h1>
+								<button type="button" class="btn add-more add-experience mb-3"><i class="fi fi-rr-plus-small"></i> Add More</button>
 							</div>
-							</div>
-						{% endfor %}
-						<!-- The prototype for new entries -->
-						{% if form.experience|length == 0 %}
-							<div class="experience-entry">
-								{{ form_row(form.experience.vars.prototype.company)}}
-								{{ form_row(form.experience.vars.prototype.jobTitle)}}
-								{{ form_row(form.experience.vars.prototype.yearFrom)}}
-								{{ form_row(form.experience.vars.prototype.toYear)}}
-							</div>
-						{% endif %}
+							{% for experience in form.experience %}
+								<div class="experience-entry mb-5">
+									<div class="row">
+										<div class="col-lg-6">
+											{{ form_row(experience.company, {'attr': {'class': 'form-control'}}) }}
+										</div>
+										<div class="col-lg-6">
+											{{ form_row(experience.jobTitle, {'attr': {'class': 'form-control'}}) }}
+										</div>
+										<div class="col-lg-6">
+											{{ form_row(experience.yearFrom, {'attr': {'class': 'form-control'}}) }}
+										</div>
+										<div class="col-lg-6">
+											{{ form_row(experience.toYear, {'attr': {'class': 'form-control'}}) }}
+										</div>
+								</div>
+								</div>
+							{% endfor %}
+							<!-- The prototype for new entries -->
+							{% if form.experience|length == 0 %}
+								<div class="experience-entry">
+									{{ form_row(form.experience.vars.prototype.company)}}
+									{{ form_row(form.experience.vars.prototype.jobTitle)}}
+									{{ form_row(form.experience.vars.prototype.yearFrom)}}
+									{{ form_row(form.experience.vars.prototype.toYear)}}
+								</div>
+							{% endif %}
+						</div>
 					</div>
-				</div>
 
 
-				<div class="col-lg-12 mb-5">
-					<div class="skills">
-						<h1>Skill</h1>
-						<button type="button" class="btn btn-success add-skill mb-3">Add More</button>
-						{% for skill in form.skill %}
-							<div class="skill-entry">
-								{{ form_row(skill.skills, {'attr': {'class': 'form-control'}}) }}
-							</div>
-						{% endfor %}
-						<!-- The prototype for new entries -->
-						{% if form.skill|length == 0 %}
-							<div class="skill-entry">
-								{{ form_row(form.skill.vars.prototype.skills,{'attr': {'class': ''}})}}
-							</div>
-						{% endif %}
+					<div class="col-lg-12 mb-5">
+						<div class="skills">
+							<h1>Skills</h1>
+
+							{% for skill in form.skill %}
+								<div class="skill-entry mb-3">
+									{{ form_row(skill.skills, {'attr': {'class': 'form-control'}}) }}
+								</div>
+							{% endfor %}
+							<!-- The prototype for new entries -->
+							{% if form.skill|length == 0 %}
+								<div class="skill-entry mb-3">
+									{{ form_row(form.skill.vars.prototype.skills,{'attr': {'class': 'mb-3'}})}}
+								</div>
+							{% endif %}
+						</div>
 					</div>
+
+
+					<div class="col-lg-6 mb-3">
+						{{ form_widget(form.save) }}
+					</div>
+
+
+					{{ form_end(form) }}
 				</div>
-
-
-				<div class="col-lg-6 mb-3">
-					{{ form_widget(form.save) }}
-				</div>
-
-
-			{{ form_end(form) }}
 			</div>
+
+
+{% endblock %}
+{% block js %}
+<script>
+	let dropdown = document.querySelector(".account-dropdown");
+	let avatar = document.querySelector(".avatar");
+	let account = document.querySelector(".account");
+	avatar.addEventListener("click", function () {
+		if (dropdown.classList.contains("show")) {
+			dropdown.classList.remove("show");
+		} else {
+			dropdown.classList.add("show");
+		}
+	});
+
+	document.addEventListener("click", function (e) {
+		if (dropdown.classList.contains("show")) {
+			if (! account.contains(e.target)) {
+				dropdown.classList.remove("show");
+			}
+		}
+	});
+
+	document.addEventListener('DOMContentLoaded', function () {
+		const educationContainer = document.querySelector('.educations');
+		const addEducationButton = document.querySelector('.add-education');
+
+		const createEducationEntry = (index) => {
+			let currentYear = new Date().getFullYear();
+			let year = document.createElement("select");
+			let defaultYear = document.createElement("option");
+			defaultYear.innerText = "Choose a year";
+			defaultYear.setAttribute("selected","");
+			year.appendChild(defaultYear);
+			for(let i = 2000; i <= currentYear; ++i){
+				let option = document.createElement("option");
+				option.innerText = i;
+				option.setAttribute("value", i);
+				year.appendChild(option);
+			}
+			year.classList.add("form-select","mb-3");
+			year.setAttribute("name", `form[education][${index}][year]`);
+			year = year.outerHTML;
+
+
+			let degree = document.createElement("select");
+			let defaultDegree = document.createElement("option");
+			defaultDegree.innerText = "Choose a degree";
+			defaultDegree.setAttribute("selected","");
+			degree.appendChild(defaultDegree);
+			let highSchool = document.createElement("option");
+			highSchool.innerText = "High School";
+			highSchool.setAttribute("value", "high school");
+
+			let bachelor = document.createElement("option");
+			bachelor.innerText = "Bachelor Degree";
+			bachelor.setAttribute("value", "bachelor degree");
+
+			let master = document.createElement("option");
+			master.innerText = "Master Degree";
+			master.setAttribute("value", "master degree");
+
+			let phd = document.createElement("option");
+			phd.innerText = "PhD";
+			phd.setAttribute("value", "phd");
+
+			degree.appendChild(highSchool);
+			degree.appendChild(bachelor);
+			degree.appendChild(master);
+			degree.appendChild(phd);
+			degree.classList.add("form-select","mb-3");
+			degree.setAttribute("name", `form[education][${index}][degree]`);
+			degree = degree.outerHTML;
+
+
+
+		return `
+									<div class="education-entry mb-5">
+										<button type="button" class="btn btn-danger remove-education mb-3">Remove</button>
+										<div class="row">
+											<div class="col-lg-6">
+												${year}
+											</div>
+
+											<div class="col-lg-6">
+												${degree}
+											</div>
+
+											<div class="col-lg-12">
+												<input type="text" name="form[education][${index}][university]" placeholder="University" class="form-control mb-3">
+											</div>
+
+										</div>
+									</div>`;
+		};
+
+		addEducationButton.addEventListener('click', function () {
+		const index = educationContainer.querySelectorAll('.education-entry').length;
+				const newEntryHtml = createEducationEntry(index);
+			educationContainer.insertAdjacentHTML('beforeend', newEntryHtml);
+		});
+
+		educationContainer.addEventListener('click', function (event) {
+			if (event.target.classList.contains('remove-education')) {
+				event.target.closest('.education-entry').remove();
+			}
+		});
+});
+
+
+		document.addEventListener('DOMContentLoaded', function () {
+			const experienceContainer = document.querySelector('.experiences');
+			const addExperienceButton = document.querySelector('.add-experience');
+
+		// Manually define the template for a new education entry in JavaScript
+			const createExperienceEntry = (index) => {
+			return `
+										<div class="experience-entry mb-5">
+												<div class="row">
+
+													<div class="col-lg-6">
+														<input type="text" name="form[experience][${index}][company]" placeholder="Company" class="form-control mb-3">
+													</div>
+
+													<div class="col-lg-6">
+														<input type="text" name="form[experience][${index}][jobTitle]" placeholder="Job Title" class="form-control mb-3">
+													</div>
+
+													<div class="col-lg-6">
+														<input type="date" name="form[experience][${index}][yearFrom]" placeholder="From" class="form-control mb-3">
+													</div>
+
+													<div class="col-lg-6">
+														<input type="date" name="form[experience][${index}][toYear]" placeholder="To" class="form-control mb-3">
+													</div>
 	
-		</div>
-	
-	
-</div>
+												</div>
+												<button type="button" class="btn btn-danger remove-experience">Remove</button>
 
-{% endblock %}{% block js %}<script>
-let dropdown = document.querySelector(".account-dropdown");
-let avatar = document.querySelector(".avatar");
-let account = document.querySelector(".account");
-avatar.addEventListener("click", function () {
-if (dropdown.classList.contains("show")) {
-dropdown.classList.remove("show");
-} else {
-dropdown.classList.add("show");
-}
-});
+										</div>`;
+			};
 
-document.addEventListener("click", function (e) {
-if (dropdown.classList.contains("show")) {
-if (! account.contains(e.target)) {
-dropdown.classList.remove("show");
-}
-}
-});
+			addExperienceButton.addEventListener('click', function () {
+				const index = experienceContainer.querySelectorAll('.experience-entry').length;
+				const newEntryHtml = createExperienceEntry(index);
+				experienceContainer.insertAdjacentHTML('beforeend', newEntryHtml);
+			});
 
-document.addEventListener('DOMContentLoaded', function () {
-const educationContainer = document.querySelector('.educations');
-const addEducationButton = document.querySelector('.add-education');
-
-// Manually define the template for a new education entry in JavaScript
-const createEducationEntry = (index) => {
-return `
-              <div class="education-entry mb-3">
-                  <input type="text" name="form[education][${index}][year]" placeholder="Year" class="form-control">
-                  <input type="text" name="form[education][${index}][degree]" placeholder="Degree" class="form-control">
-                  <input type="text" name="form[education][${index}][university]" placeholder="University" class="form-control">
-                  <button type="button" class="btn btn-danger remove-education">Remove</button>
-              </div>`;
-};
-
-addEducationButton.addEventListener('click', function () {
-const index = educationContainer.querySelectorAll('.education-entry').length;
-const newEntryHtml = createEducationEntry(index);
-educationContainer.insertAdjacentHTML('beforeend', newEntryHtml);
-});
-
-// Event delegation to handle removing dynamically added fields
-educationContainer.addEventListener('click', function (event) {
-if (event.target.classList.contains('remove-education')) {
-event.target.closest('.education-entry').remove();
-}
-});
-});
+			// Event delegation to handle removing dynamically added fields
+			experienceContainer.addEventListener('click', function (event) {
+				if (event.target.classList.contains('remove-experience')) {
+					event.target.closest('.experience-entry').remove();
+				}
+			});
+		});
 
 
-document.addEventListener('DOMContentLoaded', function () {
-const experienceContainer = document.querySelector('.experiences');
-const addExperienceButton = document.querySelector('.add-experience');
+		document.addEventListener('DOMContentLoaded', function () {
+			const experienceContainer = document.querySelector('.skills');
+			const addExperienceButton = document.querySelector('.add-skill');
 
-// Manually define the template for a new education entry in JavaScript
-const createExperienceEntry = (index) => {
-return `
-              <div class="experience-entry mb-3">
-                  <input type="text" name="form[experience][${index}][company]" placeholder="Company" class="form-control">
-                  <input type="text" name="form[experience][${index}][jobTitle]" placeholder="Job Title" class="form-control">
-                  <input type="date" name="form[experience][${index}][yearFrom]" placeholder="From" class="form-control">
-                  <input type="date" name="form[experience][${index}][toYear]" placeholder="To" class="form-control">
-                  <button type="button" class="btn btn-danger remove-experience">Remove</button>
-              </div>`;
-};
+		// Manually define the template for a new education entry in JavaScript
+			const createExperienceEntry = (index) => {
+			return `
+										<div class="skill-entry mb-3">
+												<input type="text" name="form[skill][${index}][skills]" placeholder="Skill" class="form-control mb-3">
+												<button type="button" class="btn btn-danger remove-skill">Remove</button>
+										</div>`;
+			};
 
-addExperienceButton.addEventListener('click', function () {
-const index = experienceContainer.querySelectorAll('.experience-entry').length;
-const newEntryHtml = createExperienceEntry(index);
-experienceContainer.insertAdjacentHTML('beforeend', newEntryHtml);
-});
+			addExperienceButton.addEventListener('click', function () {
+				const index = experienceContainer.querySelectorAll('.skill-entry').length;
+				const newEntryHtml = createExperienceEntry(index);
+				experienceContainer.insertAdjacentHTML('beforeend', newEntryHtml);
+			});
 
-// Event delegation to handle removing dynamically added fields
-experienceContainer.addEventListener('click', function (event) {
-if (event.target.classList.contains('remove-experience')) {
-event.target.closest('.experience-entry').remove();
-}
-});
-});
+			// Event delegation to handle removing dynamically added fields
+			experienceContainer.addEventListener('click', function (event) {
+				if (event.target.classList.contains('remove-skill')) {
+					event.target.closest('.skill-entry').remove();
+				}
+			});
+		});
 
+</script>
 
-document.addEventListener('DOMContentLoaded', function () {
-const experienceContainer = document.querySelector('.skills');
-const addExperienceButton = document.querySelector('.add-skill');
-
-// Manually define the template for a new education entry in JavaScript
-const createExperienceEntry = (index) => {
-return `
-              <div class="skill-entry mb-3">
-                  <input type="text" name="form[skill][${index}][skills]" placeholder="Javascript, PHP ..." class="form-control">
-                  <button type="button" class="btn btn-danger remove-skill">Remove</button>
-              </div>`;
-};
-
-addExperienceButton.addEventListener('click', function () {
-const index = experienceContainer.querySelectorAll('.skill-entry').length;
-const newEntryHtml = createExperienceEntry(index);
-experienceContainer.insertAdjacentHTML('beforeend', newEntryHtml);
-});
-
-// Event delegation to handle removing dynamically added fields
-experienceContainer.addEventListener('click', function (event) {
-if (event.target.classList.contains('remove-skill')) {
-event.target.closest('.skill-entry').remove();
-}
-});
-});</script>{% endblock  %}
+{% endblock  %}
 

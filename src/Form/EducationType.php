@@ -26,27 +26,29 @@ class EducationType extends AbstractType
         $builder
             ->add('year', ChoiceType::class, [
                 'attr' => [
-                    'class' => 'form-select'
+                    'class' => 'form-select mb-3'
                 ],
-                'required' => true,
+                'required' => false,
                 'choices' => $this->yearGenerator->getYearsList(),
                 'placeholder' => 'Select a year',
             ])
             ->add('university', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control mb-3'
+                ],
+                'required' => false,
             ])
             ->add('degree', ChoiceType::class, [
                 'attr' => [
-                    'class' => 'form-select'
+                    'class' => 'form-select mb-3'
                 ],
                 'choices' => [
                     'High School' => 'high school',
-                    'Bachelor Degree' => 'dachelor degree',
+                    'Bachelor Degree' => 'bachelor degree',
                     'Master Degree' => 'master degree',
                     'PhD' => 'phd'
-                ]
+                ],
+                'required' => false,
             ])
         ;
     }

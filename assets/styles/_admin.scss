@@ -45,16 +45,16 @@
       cursor: pointer;
       position: relative;
 
-      .notif-count {
+      .new-notif {
         position: absolute;
-        right: -5px;
-        top: 0;
+        right: 0px;
+        top: 3px;
         color: #fff;
         text-align: center;
         font-weight: bold;
         font-size: 10px;
-        width: 15px;
-        height: 15px;
+        width: 8px;
+        height: 8px;
         border-radius: 50px;
         background-color: #f00;
       }
@@ -65,7 +65,7 @@
 }
 
 .content {
-  margin-top: 90px;
+  margin-top: 80px;
 }
 
 .account {
@@ -77,16 +77,16 @@
   .account-dropdown {
     list-style: none;
     position: absolute;
-    left: -89px;
+    left: -150px;
     top: 60px;
     background-color: #fff;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    transition: .3s;
-    opacity: 0;
-    visibility: hidden;
+    transition: .2s;
+    display: none;
     width: 200px;
     padding: 0;
     border: 1px solid rgb(239, 234, 228);
+    z-index: 555;
 
     li {
       transition: .4s;
@@ -125,8 +125,9 @@
     }
 
     &.show {
-      opacity: 1;
-      visibility: visible;
+      display: block;
+      left: -150px;
+      z-index: 10;
     }
 
 
@@ -139,5 +140,10 @@
     line-height: 40px;
     background-color: #ccc;
     border-radius: 50px;
+
+    img {
+      width: 100%;
+      border-radius: 50px;
+    }
   }
 }

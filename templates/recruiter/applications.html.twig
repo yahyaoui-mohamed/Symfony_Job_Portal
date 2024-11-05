@@ -8,15 +8,45 @@
 		<div class="admin">
 			{% include 'recruiter_sidebar.html.twig' %}
 		</div>
-			<div class="content">
-				<div class="row">
-				{% for app in apps %}
-				<div class="col-lg-4">
-					{{app.job.name}}
-					{{app.user.nom}}
+			<div class="container">
+				<div class="dashboard">
+						{% for app in apps %}
+						
+							<div class="application mb-3">
+								<div class="row">
+									<div class="col-lg-2">
+										<div class="user-img">
+										{% if app.user.useravatar %}
+											<img src="/avatars/{{app.user.useravatar}}" alt="User Avatar" />
+										{% else %}
+											<img src="/avatars/user.png" alt="User Avatar"/>
+										{% endif %}
+										</div>
+									</div>
+									<div class="col-lg-9">
+										<div class="user-info">
+											<p>{{app.user.nom}} {{app.user.prenom}}</p>
+										</div>
+									</div>
+									<div class="col-lg-1">
+
+										<div class="options">
+											<span class="dropdown">
+												<i class="fi fi-rr-menu-dots-vertical"></i>
+											</span>
+											<div class="option-menu">
+												<a href="#"><i class="fi fi-rr-user"></i> Profile</a>
+												<a href="#"><i class="fi fi-rr-envelope"></i> Contact</a>
+												<a href="#"><i class="fi fi-tr-document"></i> View CV</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+
 				</div>
-				{% endfor %}
-				</div>
+				
 			</div>
 	</div>
 
@@ -43,6 +73,14 @@
 					dropdown.classList.remove("show");
 				}
 			}
+		});
+
+		document.querySelectorAll(".options").forEach(function(option){
+			option.addEventListener("click", function(){
+				let menu = this.querySelector(".option-menu");
+				console.log(this);
+				menu.classList.toggle("show");
+			});
 		});
 
 	</script>

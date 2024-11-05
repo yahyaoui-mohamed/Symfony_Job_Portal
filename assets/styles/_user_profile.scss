@@ -1,0 +1,67 @@
+.profile,
+.educations,
+.experiences,
+.skills {
+
+  .form-control,
+  .form-select {
+    border-radius: 0;
+    box-shadow: none;
+    background: #ccc;
+    border-color: #ccc;
+  }
+
+  #form_cv {
+    display: none;
+  }
+
+  #upload_cv {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+
+    &:active {
+      transform: scale(0.9);
+    }
+
+    i {
+      margin-right: 10px;
+      display: inline-block;
+    }
+  }
+
+  .add-more {
+    border-radius: 0;
+    color: #ccc;
+    border-color: #000;
+    background-color: #000;
+  }
+}
+
+.account {
+  .account-avatar {
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
+.parameters {
+  .form-control {
+    border-radius: 0;
+    box-shadow: none;
+    background: #ccc;
+    border-color: #ccc;
+  }
+
+  .btn {
+    background-color: #000;
+    color: #fff;
+    border-color: #000;
+    border-radius: 0;
+    padding: 10px 30px;
+  }
+
+}

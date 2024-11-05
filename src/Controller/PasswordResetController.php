@@ -55,9 +55,10 @@ class PasswordResetController extends AbstractController
             $token = bin2hex(random_bytes(32));
 
             // Generate a password reset link (example link)
-            $resetLink = $this->generateUrl('app_password_reset_confirm', [
+            $resetLink = "http://localhost:8000" . $this->generateUrl('app_password_reset_confirm', [
                 'token' => $token
             ], true);
+            // dd($resetLink);
 
             $user = $em->getRepository(User::class)->findOneBy(["email" => $email]);
             $emailService->sendPasswordResetEmail($email, $resetLink);

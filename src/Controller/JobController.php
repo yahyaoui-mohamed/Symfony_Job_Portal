@@ -47,7 +47,6 @@ class JobController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($job);
             $em->flush();
-            // Add flash message
             return $this->redirectToRoute("app_edit_job", ['id' => $id]);
         }
         return $this->render('Recruiter/job/edit.html.twig', [
@@ -65,8 +64,8 @@ class JobController extends AbstractController
         return $this->redirectToRoute("app_job");
     }
 
-    #[Route('/job/application', name: 'app_apps_job')]
-    public function applications(Request $request, EntityManagerInterface $em): Response
+    #[Route('/application/{jobId}', name: 'app_apps_job')]
+    public function applications($jobId, Request $request, EntityManagerInterface $em): Response
     {
         $apps = $this->getUser()->getRecruiterApps();
 

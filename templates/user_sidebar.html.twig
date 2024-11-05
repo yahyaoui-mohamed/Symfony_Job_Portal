@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg">
 	<div class="container">
-		<a class="navbar-brand" href="#">Navbar</a>
+		<a class="navbar-brand" href="{{path("app_index")}}">JobPortal</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -33,7 +33,9 @@
 						<a href="{{path("app_recruiter")}}" class="auth-btn">Account</a>
 					{% elseif 'ROLE_USER' in app.user.roles %}
 					<div class="account">
-						<div class="avatar"></div>
+						<div class="avatar">
+							<img src="/avatars/{{app.user.useravatar}}" alt="">
+						</div>
 						<ul class="account-dropdown">
 							<li>
 								<a href="{{path("app_account")}}">
@@ -78,26 +80,3 @@
 		</div>
 	</div>
 </nav>
-
-
-	<div class="upper-nav">
-		<div class="row">
-			<div class="col-lg-10">
-				<div class="search-bar">
-					<form>
-						<input type="search" placeholder="Search..." class="form-control"/>
-					</form>
-				</div>
-			</div>
-			<div class="col-lg-2">
-				<div class="d-flex">
-					<div class="notification">
-						<span class="notif-count">1</span>
-						<i class="fi fi-ts-bell"></i>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-	</div>
-

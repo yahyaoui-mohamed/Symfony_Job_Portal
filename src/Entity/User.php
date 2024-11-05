@@ -92,6 +92,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Applications::class, mappedBy: 'recruiter', orphanRemoval: true)]
     private Collection $recruiterApps;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $cv = null;
+
     public function __construct()
     {
         $this->applications = new ArrayCollection();
@@ -442,6 +445,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $recruiterApp->setRecruiter(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCv(): ?string
+    {
+        return $this->cv;
+    }
+
+    public function setCv(?string $cv): static
+    {
+        $this->cv = $cv;
 
         return $this;
     }

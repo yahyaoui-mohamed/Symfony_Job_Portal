@@ -19,12 +19,14 @@ class ExperienceType extends AbstractType
             ->add('company', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
-                ]
+                ],
+                'required' => false,
             ])
             ->add('jobTitle', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
-                ]
+                ],
+                'required' => false,
             ])
             ->add('yearFrom', DateType::class, [
                 'attr' => [
@@ -35,6 +37,7 @@ class ExperienceType extends AbstractType
                 'attr' => [
                     'class' => 'form-control'
                 ],
+                'required' => false,
             ])
         ;
     }
