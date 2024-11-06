@@ -27,6 +27,8 @@
 
   .application {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    position: relative;
+    z-index: 1;
 
     .user-info {
       padding: 20px 10px;
@@ -67,6 +69,7 @@
 
       &.show {
         display: block;
+        z-index: 1;
       }
 
       a {
@@ -95,6 +98,22 @@
     .user-info {
       p {
         margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.stats {
+  .stat-item {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 0px 11px -1px;
+    padding: 50px;
+
+    p {
+      font-size: 20px;
+
+      span {
+        font-size: 32px;
+        font-weight: 500;
       }
     }
   }

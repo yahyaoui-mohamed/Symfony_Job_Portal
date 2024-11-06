@@ -6,15 +6,45 @@
 {% block body %}
 
 	<div class="d-flex">
-		<div class="col-lg-2">
 			<div class="admin">
 				{% include 'recruiter_sidebar.html.twig' %}
 			</div>
-		</div>
-		<div class="col-lg-10">
-			<div class="content"></div>
-		</div>
-	</div>
+		<div class="container">
+			<div class="content">
+				<div class="stats">
+					<div class="row">
+						<div class="col-lg-4">
+							<div class="stat-item">
+								<i class="fi fi-rr-briefcase"></i>
+								<p>
+									Posted Jobs
+									<span>0</span>
+								</p>
+							</div>
+						</div>
+						<div class="col-lg-4">
+								<div class="stat-item">
+									<i class="fi fi-rr-users-alt"></i>
+									<p>
+										Total Applied
+										<span>0</span>
+									</p>
+								</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="stat-item">
+								<i class="fi fi-rr-users-alt"></i>
+								<p>
+								Jobs
+								<span>0</span>
+								</p>
+							</div>
+						</div>
+					</div>
+			</div>
+</div>
+</div>
+</div>
 
 
 {% endblock %}

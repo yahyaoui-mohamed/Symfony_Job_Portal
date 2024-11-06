@@ -12,3 +12,16 @@
   font-family: Montserrat, sans-serif;
   text-decoration: none;
 }
+
+.custom-btn {
+  background-color: #000;
+  border-radius: 0;
+  border-color: #000;
+  color: #fff;
+
+  &:hover,
+  &:focus {
+    color: #fff;
+    background-color: #000;
+  }
+}

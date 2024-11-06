@@ -26,9 +26,15 @@ class JobController extends AbstractController
     public function add(Request $request, EntityManagerInterface $em): Response
     {
         $job = new Job();
+        if (empty($job->getExperiences())) {
+            $job->setExperiences(['']); // Add an empty experience to ensure one input
+            $job->setMissions(['']); // Add an empty experience to ensure one input
+            $job->setRequirements(['']); // Add an empty experience to ensure one input
+        }
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            dd($form->createView());
             $em->persist($job);
             $em->flush();
             return $this->redirectToRoute("app_add_job");

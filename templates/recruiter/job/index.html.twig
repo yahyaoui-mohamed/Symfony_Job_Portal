@@ -3,84 +3,71 @@
 {% endblock %}
 {% block body %}
 
-	<div class="d-flex">
-			<div class="col-lg-2">
-				<div class="admin">
-					{% include 'recruiter_sidebar.html.twig' %}
-				</div>
-			</div>
-
-			<div class="container">
-			<div class="col-lg-10">
-				<div class="content">
-				<div class="add-btn mb-3">
-					<a href="{{path("app_add_job")}}" class="btn btn-primary">Add new job</a>
-				</div>
-				<div class="job-wrapper">
-					<div class="row">
-						{% for job in jobs %}
-							<div class="col-lg-4">
-								<div class="job-item mb-3">
-									<h5>
-										{{job.name}}
-									</h5>
-									<p>
-										{{job.description}}
-									</p>
-									<div class="salary">
-									<span class="min-salary">
-										{{job.minsalary}}€
-									</span>
-									<span class="max-salary">
-										{{job.maxsalary}}€
-									</span>
-									</div>
-									<p class="job-type">
-										<span>
-											{{job.type}}
-										</span>
-									</p>
-									<div class="btns">
-										<a href="/application/{{job.id}}" class="btn btn-primary">Applications</a>
-										<a href="/job/edit/{{job.id}}" class="btn btn-primary">Edit</a>
-										<a href="/job/delete/{{job.id}}" class="btn btn-danger">Delete</a>
-									</div>
-								</div>
-							</div>
-						{% endfor %}
-					
-					</div>
-			</div>
-		</div>
-</div>
-</div>
-
-
+<div class="d-flex">
+	<div class="admin">
+		{% include 'recruiter_sidebar.html.twig' %}
 	</div>
 
-	{% endblock %}
-	{% block js %}
-		<script>
-		
-			let dropdown = document.querySelector(".account-dropdown");
-			let avatar = document.querySelector(".avatar");
-			let account = document.querySelector(".account");
+	<div class="container">
+		<div class="content">
+			<div class="add-btn mb-3">
+				<a href="{{path("app_add_job")}}" class="btn btn-primary custom-btn">Add new job</a>
+			</div>
+			<div class="job-wrapper">
+				<div class="row">
+					{% for job in jobs %}
+						<div class="col-lg-4">
+							<div class="job-item mb-3">
+								<h5>{{job.name}}</h5>
+								<p>{{job.description}}</p>
+								<div class="salary">
+									<span class="min-salary">{{job.minsalary}}€</span>
+									<span class="max-salary">{{job.maxsalary}}€</span>
+								</div>
 
-			avatar.addEventListener("click", function () {
-				if (dropdown.classList.contains("show")) {
+								<p class="job-type">
+									<span>{{job.type}}</span>
+								</p>
+								
+								<div class="btns">
+									<a href="/application/{{job.id}}" class="btn btn-primary">Applications</a>
+									<a href="/job/edit/{{job.id}}" class="btn btn-primary">Edit</a>
+									<a href="/job/delete/{{job.id}}" class="btn btn-danger">Delete</a>
+								</div>
+
+							</div>
+						</div>
+					{% endfor %}
+				
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+{% block js %}
+	<script>
+
+		let dropdown = document.querySelector(".account-dropdown");
+		let avatar = document.querySelector(".avatar");
+		let account = document.querySelector(".account");
+
+		avatar.addEventListener("click", function () {
+			if (dropdown.classList.contains("show")) {
+				dropdown.classList.remove("show");
+			} else {
+				dropdown.classList.add("show");
+			}
+		});
+
+		document.addEventListener("click", function (e) {
+			if (dropdown.classList.contains("show")) {
+				if (!account.contains(e.target)) {
 					dropdown.classList.remove("show");
-				} else {
-					dropdown.classList.add("show");
 				}
-			});
+			}
+		});
 
-			document.addEventListener("click", function (e) {
-				if (dropdown.classList.contains("show")) {
-					if (!account.contains(e.target)) {
-						dropdown.classList.remove("show");
-					}
-				}
-			});
-
-		</script>
-	{% endblock  %}
+	</script>
+{% endblock  %}

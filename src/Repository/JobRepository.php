@@ -40,4 +40,15 @@ class JobRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findJobsByCriteria(string $job, string $location): array
+    {
+        return $this->createQueryBuilder('j')
+            ->where('j.name LIKE :job')
+            ->andWhere('j.country = :country')
+            ->setParameter('job', '%' . $job . '%')  // Partial match
+            ->setParameter('country', $location)
+            ->getQuery()
+            ->getResult();
+    }
 }

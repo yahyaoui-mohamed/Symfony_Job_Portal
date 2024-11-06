@@ -1,20 +1,181 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello JobSearchController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	{% include 'navbar.html.twig' %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/xampp/htdocs/Job_Portal/src/Controller/JobSearchController.php</code></li>
-        <li>Your template at <code>C:/xampp/htdocs/Job_Portal/templates/job_search/index.html.twig</code></li>
-    </ul>
-</div>
+	<div class="slider">
+		<div class="overlay"></div>
+		<div class="slide-content">
+			<h1>Get Your Job Today</h1>
+		</div>
+	</div>
+	<div class="container">
+		<div class="job-wrap">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="job-filter">
+						<div class="title d-flex align-items-center">
+							<i class="fi fi-rr-bars-filter"></i>
+							<h4>Filter Jobs</h4>
+						</div>
+
+						<div class="filter">
+
+							<div class="filter-item">
+								<h3>Job Category</h3>
+								<select name="" id="job-category" class="form-select">
+									<option value="">All category</option>
+									<option value="">Category 1</option>
+									<option value="">Category 1</option>
+									<option value="">Category 1</option>
+								</select>
+							</div>
+
+							<div class="filter-item">
+
+								<h3>Job Type</h3>
+								<ul>
+									<div class="mb-3">
+										<input type="checkbox" name="" id="fulltime">
+										<label for="fulltime">Full Time</label>
+									</div>
+
+									<div class="mb-3">
+										<input type="checkbox" name="" id="parttime">
+										<label for="parttime">Part Time</label>
+									</div>
+
+									<div class="mb-3">
+										<input type="checkbox" name="" id="remote">
+										<label for="remote">Remote</label>
+									</div>
+
+									<div class="mb-3">
+										<input type="checkbox" name="" id="freelance">
+										<label for="freelance">Freelance</label>
+									</div>
+								</ul>
+							</div>
+
+							<div class="filter-item">
+								<h3>Job Location</h3>
+								<select name="" id="" class="form-select">
+									<option value="">Anywhere</option>
+									<option value="">Africa</option>
+									<option value="">America</option>
+									<option value="">Asia</option>
+									<option value="">Europe</option>
+								</select>
+							</div>
+
+
+							<div class="filter-item">
+
+								<h3>Experience</h3>
+								<ul>
+									<div class="mb-3">
+										<input type="checkbox" name="" id="1year">
+										<label for="1year">1 Year</label>
+									</div>
+
+									<div class="mb-3">
+										<input type="checkbox" name="" id="2year">
+										<label for="2year">2 Years</label>
+									</div>
+
+									<div class="mb-3">
+										<input type="checkbox" name="" id="3year">
+										<label for="3year">3 Years</label>
+									</div>
+
+									<div class="mb-3">
+										<input type="checkbox" name="" id="5year">
+										<label for="5year">5 Years +</label>
+									</div>
+
+								</ul>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-9">
+					<div class="job-list">
+						<div class="job-filter-option">
+							<div class="d-flex justify-content-between">
+								<div class="option">
+									{% if jobsCount < 2 %}
+										{{jobsCount}}
+										job found.
+									{% else %}
+										{{jobsCount}}
+										jobs found.
+									{% endif %}
+								</div>
+								<div class="option d-flex">
+									<span>Sort By</span>
+									<select name="" id="" class="form-select">
+										<option value="">None</option>
+										<option value="">Option 1</option>
+										<option value="">Option 2</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="list">
+
+							{% for job in jobs %}
+								<div class="job-item">
+									<div class="row">
+										<div class="col-lg-2">
+											<div class="company-pic">
+												<img src="./build/images/company.9b90c611.webp" alt=""/>
+											</div>
+										</div>
+										<div class="col-lg-8">
+											<div class="job-title">
+												<h3>{{job.name}}</h3>
+											</div>
+											<div class="desc">
+												<div class="row">
+													<div class="col-lg-4">
+														<span>Creative Agency</span>
+													</div>
+													<div class="col-lg-4">
+														{{job.city}},
+														{{job.country}}
+													</div>
+													<div class="col-lg-4">
+														{{job.minsalary}}
+														€ -
+														{{job.maxsalary}}
+														€
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-2">
+											<a href="./jobs/{{job.id}}" class="btn btn-primary">Apply</a>
+										</div>
+									</div>
+								</div> 
+							{% endfor %}
+							{# {{ knp_pagination_render(jobs) }} #}
+
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+
+	</div>
+
 {% endblock %}
+

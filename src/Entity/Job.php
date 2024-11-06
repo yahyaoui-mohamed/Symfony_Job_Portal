@@ -55,10 +55,20 @@ class Job
     #[ORM\JoinColumn(nullable: false)]
     private ?User $recruiter = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?array $Requirements = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?array $Experiences = [];
+
+    #[ORM\Column(nullable: true)]
+    private ?array $Missions = null;
+
     public function __construct()
     {
         $this->applications = new ArrayCollection();
         $this->saveds = new ArrayCollection();
+        $this->Experiences = [];
     }
 
     public function getId(): ?int
@@ -230,6 +240,42 @@ class Job
     public function setRecruiter(?user $recruiter): static
     {
         $this->recruiter = $recruiter;
+
+        return $this;
+    }
+
+    public function getRequirements(): ?array
+    {
+        return $this->Requirements;
+    }
+
+    public function setRequirements(?array $Requirements): static
+    {
+        $this->Requirements = $Requirements;
+
+        return $this;
+    }
+
+    public function getExperiences(): ?array
+    {
+        return $this->Experiences;
+    }
+
+    public function setExperiences(?array $Experiences): static
+    {
+        $this->Experiences = $Experiences;
+
+        return $this;
+    }
+
+    public function getMissions(): ?array
+    {
+        return $this->Missions;
+    }
+
+    public function setMissions(?array $Missions): static
+    {
+        $this->Missions = $Missions;
 
         return $this;
     }

@@ -7,12 +7,13 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 class IndexController extends AbstractController
 {
   #[Route("/", name: "app_index")]
-  public function index()
+  public function index(Request $request, SessionInterface $session)
   {
     $form = $this->createFormBuilder()
       ->add("job", SearchType::class)
@@ -34,12 +35,17 @@ class IndexController extends AbstractController
       ->add("search", SubmitType::class)
       ->getForm();
 
-    // $form->handleRequest($request);
-    // if ($form->isSubmitted() && $form->isValid()) {
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+      $data = $form->getData();
 
-    //   $data = $form->getData();
-    //   dd($data);
-    // }
+      $session->set('job_search_data', [
+        'job' => $data["job"],
+        'location' => $data["location"],
+      ]);
+
+      return $this->redirectToRoute("app_job_search");
+    }
 
     // if ($this->getUser()) {
     //   if (in_array("ROLE_ADMIN", $this->getUser()->getRoles())) {
