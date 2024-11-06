@@ -27,14 +27,14 @@ class JobController extends AbstractController
     {
         $job = new Job();
         if (empty($job->getExperiences())) {
-            $job->setExperiences(['']); // Add an empty experience to ensure one input
-            $job->setMissions(['']); // Add an empty experience to ensure one input
-            $job->setRequirements(['']); // Add an empty experience to ensure one input
+            $job->setExperiences(['']);
+            $job->setMissions(['']);
+            $job->setRequirements(['']);
         }
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($form->createView());
+            $job->setRecruiter($this->getUser());
             $em->persist($job);
             $em->flush();
             return $this->redirectToRoute("app_add_job");

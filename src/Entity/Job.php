@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\JobRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: JobRepository::class)]
@@ -18,7 +19,7 @@ class Job
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 1000)]
     private ?string $description = null;
 
     #[ORM\Column]
@@ -42,7 +43,7 @@ class Job
     #[ORM\OneToMany(targetEntity: Applications::class, mappedBy: 'job', orphanRemoval: true)]
     private Collection $applications;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?bool $available = null;
 
     /**
@@ -63,6 +64,10 @@ class Job
 
     #[ORM\Column(nullable: true)]
     private ?array $Missions = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $posted_date = null;
+
 
     public function __construct()
     {
@@ -276,6 +281,18 @@ class Job
     public function setMissions(?array $Missions): static
     {
         $this->Missions = $Missions;
+
+        return $this;
+    }
+
+    public function getPostedDate(): ?\DateTimeInterface
+    {
+        return $this->posted_date;
+    }
+
+    public function setPostedDate(?\DateTimeInterface $posted_date): static
+    {
+        $this->posted_date = $posted_date;
 
         return $this;
     }

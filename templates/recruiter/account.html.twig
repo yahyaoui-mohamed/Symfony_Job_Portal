@@ -5,38 +5,39 @@
 {% block body %}
 
 	<div class="d-flex">
-		<div class="col-lg-2">
+
 			<div class="admin">
 				{% include 'recruiter_sidebar.html.twig' %}
 			</div>
-		</div>
-		<div class="col-lg-10">
-			<div class="content">
-        <h1>Account</h1>
 
-        {{ form_start(form) }}
-          <div class="row">
-            <div class="col-lg-6 mb-3">
-              {{ form_row(form.nom,{'attr': {'class': 'form-control', 'value':app.user.nom}}) }}
+      <div class="container">
+        <div class="content">
+          <h1>Account</h1>
+
+          {{ form_start(form) }}
+            
+            <div class="row">
+              <div class="col-lg-6 mb-3">
+                {{ form_row(form.nom,{'attr': {'class': 'form-control', 'value':app.user.nom}}) }}
+              </div>
+
+              <div class="col-lg-6 mb-3">
+                {{ form_row(form.prenom ,{'attr': {'class': 'form-control', 'value':app.user.prenom}}) }}
+              </div>
+
+              <div class="col-lg-6 mb-3">
+                {{ form_row(form.email,{'attr': {'class': 'form-control', 'value':app.user.email}}) }}
+              </div>
+
+              {{ form_row(form.save,{'attr':{'class':'custom-btn'}}) }}
+
             </div>
-            <div class="col-lg-6 mb-3">
-              {{ form_row(form.prenom ,{'attr': {'class': 'form-control', 'value':app.user.prenom}}) }}
-            </div>
 
-            <div class="col-lg-6 mb-3">
-              {{ form_row(form.email,{'attr': {'class': 'form-control', 'value':app.user.email}}) }}
-            </div>
-
-            {{ form_row(form.save) }}
-
-
-          </div>
-
-
-
-        {{ form_end(form) }}
+          {{ form_end(form) }}
+        </div>
       </div>
-		</div>
+
+
 	</div>
 
 

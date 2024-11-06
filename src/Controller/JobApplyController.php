@@ -21,7 +21,8 @@ class JobApplyController extends AbstractController
     public function index($id, Request $request, EntityManagerInterface $em): Response
     {
         if (!$this->getUser()) {
-            $request->getSession()->set('previous_route', 'app_job_apply');
+
+            $this->addFlash("previous_route", "app_job_apply");
             return $this->redirectToRoute("app_login");
         }
         $form = $this->createFormBuilder()

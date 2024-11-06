@@ -18,10 +18,13 @@
   border-radius: 0;
   border-color: #000;
   color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  outline: none;
+  border: none;
+}
 
-  &:hover,
-  &:focus {
-    color: #fff;
-    background-color: #000;
-  }
+textarea {
+  height: 200px;
+  resize: none;
 }
