@@ -51,3 +51,23 @@
     }
   }
 }
+
+.categories {
+  padding-top: 60px;
+
+  .category-item {
+    transition: .4s;
+
+    &:hover {
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+      border: none;
+    }
+
+    padding: 30px;
+    border: 1px solid #2980b9;
+
+    i {
+      font-size: 50px;
+    }
+  }
+}

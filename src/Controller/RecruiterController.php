@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Applications;
+use App\Entity\Job;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,10 +18,14 @@ use Symfony\Component\Routing\Attribute\Route;
 class RecruiterController extends AbstractController
 {
     #[Route('/recruiter', name: 'app_recruiter')]
-    public function index(): Response
+    public function index(EntityManagerInterface $em): Response
     {
+        $jobs = $em->getRepository(Job::class)->findBy(['recruiter' => $this->getUser()]);
+        $applied = $em->getRepository(Applications::class)->findBy(['recruiter' => $this->getUser()]);
+
         return $this->render('recruiter/index.html.twig', [
-            'controller_name' => 'RecruiterController',
+            'jobs' => count($jobs),
+            'applied' => count($applied),
         ]);
     }
 
