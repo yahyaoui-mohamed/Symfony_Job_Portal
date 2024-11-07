@@ -25,6 +25,9 @@ class JobApplyController extends AbstractController
             $this->addFlash("previous_route", "app_job_apply");
             return $this->redirectToRoute("app_login");
         }
+        $job = $em->getRepository(Job::class)->find($id);
+        $recruiter = $job->getRecruiter();
+
         $form = $this->createFormBuilder()
             ->add("nom", TextType::class)
             ->add("prenom", TextType::class)
@@ -50,7 +53,7 @@ class JobApplyController extends AbstractController
             $app->setUser($this->getUser());
             $app->setJob($job);
             $app->setAppliedAt(new DateTimeImmutable());
-
+            $app->setRecruiter($recruiter);
             $cvFilename = uniqid() . '.' . $cv->guessExtension();
             $cv->move(
                 $this->getParameter('cv_directory'),

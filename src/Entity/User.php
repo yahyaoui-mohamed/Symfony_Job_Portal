@@ -94,6 +94,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Skill::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $skills;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $cv_name = null;
+
 
     public function __construct()
     {
@@ -457,6 +460,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $skill->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCvName(): ?string
+    {
+        return $this->cv_name;
+    }
+
+    public function setCvName(?string $cv_name): static
+    {
+        $this->cv_name = $cv_name;
 
         return $this;
     }

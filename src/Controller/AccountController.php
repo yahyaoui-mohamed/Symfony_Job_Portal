@@ -106,6 +106,7 @@ class AccountController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
+            $data = $form->getData();
             foreach ($form->get('education')->getData() as $education) {
                 $education->setUser($user);
                 $em->persist($education);
@@ -122,6 +123,7 @@ class AccountController extends AbstractController
 
             $cv = $form->get('cv')->getData();
             if ($cv) {
+                $originalName = $cv->getClientOriginalName();
                 $cvFilename = uniqid() . '.' . $cv->guessExtension();
                 $cv->move(
                     $this->getParameter('cv_directory'),
@@ -129,12 +131,17 @@ class AccountController extends AbstractController
                 );
 
                 $user->setCV($cvFilename);
+                $user->setcvName($originalName);
             }
-
+            $user->setNom($data['lastname']);
+            $user->setPrenom($data['firstname']);
+            $user->setEmail($data['email']);
+            $user->setTelephone($data['phone']);
             $em->persist($user);
             $em->flush();
             return $this->redirectToRoute("app_account");
         }
+
         return $this->render('User/index.html.twig', [
             'form' => $form->createView(),
             'user' => $user,
