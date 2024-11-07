@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -66,12 +65,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $telephone = null;
 
     /**
-     * @var Collection<int, Skill>
-     */
-    #[ORM\OneToMany(targetEntity: Skill::class, mappedBy: 'user', orphanRemoval: true)]
-    private Collection $skills;
-
-    /**
      * @var Collection<int, Saved>
      */
     #[ORM\OneToMany(targetEntity: Saved::class, mappedBy: 'user', orphanRemoval: true)]
@@ -95,15 +88,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $cv = null;
 
+    /**
+     * @var Collection<int, Skill>
+     */
+    #[ORM\OneToMany(targetEntity: Skill::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $skills;
+
+
     public function __construct()
     {
         $this->applications = new ArrayCollection();
         $this->education = new ArrayCollection();
         $this->experiences = new ArrayCollection();
-        $this->skills = new ArrayCollection();
         $this->saveds = new ArrayCollection();
         $this->jobs = new ArrayCollection();
         $this->recruiterApps = new ArrayCollection();
+        $this->skills = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -318,36 +318,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Skill>
-     */
-    public function getSkills(): Collection
-    {
-        return $this->skills;
-    }
-
-    public function addSkill(Skill $skill): static
-    {
-        if (!$this->skills->contains($skill)) {
-            $this->skills->add($skill);
-            $skill->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSkill(Skill $skill): static
-    {
-        if ($this->skills->removeElement($skill)) {
-            // set the owning side to null (unless already changed)
-            if ($skill->getUser() === $this) {
-                $skill->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Saved>
      */
     public function getSaveds(): Collection
@@ -457,6 +427,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCv(?string $cv): static
     {
         $this->cv = $cv;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Skill>
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): static
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills->add($skill);
+            $skill->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): static
+    {
+        if ($this->skills->removeElement($skill)) {
+            // set the owning side to null (unless already changed)
+            if ($skill->getUser() === $this) {
+                $skill->setUser(null);
+            }
+        }
 
         return $this;
     }

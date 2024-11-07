@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\SkillRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SkillRepository::class)]
@@ -14,28 +13,16 @@ class Skill
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $skills = [];
-
     #[ORM\ManyToOne(inversedBy: 'skills')]
     #[ORM\JoinColumn(nullable: false)]
     private ?user $user = null;
 
+    #[ORM\Column(length: 1000)]
+    private ?string $skill = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getSkills(): array
-    {
-        return $this->skills;
-    }
-
-    public function setSkills(array $skills): static
-    {
-        $this->skills = $skills;
-
-        return $this;
     }
 
     public function getUser(): ?user
@@ -46,6 +33,18 @@ class Skill
     public function setUser(?user $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getSkill(): ?string
+    {
+        return $this->skill;
+    }
+
+    public function setSkill(string $skill): static
+    {
+        $this->skill = $skill;
 
         return $this;
     }

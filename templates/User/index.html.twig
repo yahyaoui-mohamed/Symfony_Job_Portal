@@ -116,28 +116,30 @@
 						</div>
 					</div>
 
-
-					<div class="col-lg-12 mb-5">
-						<div class="skills">
+					<div class="skills mb-5">
+						<div class="d-flex align-items-center justify-content-between">
 							<h1>Skills</h1>
+							<button type="button" class="btn add-more btn-primary add-skill"><i class="fi fi-rr-plus-small"></i> Add More</button>
+						</div>
 
-							{% for skill in form.skill %}
-								<div class="skill-entry mb-3">
-									{{ form_row(skill.skills, {'attr': {'class': 'form-control'}}) }}
-								</div>
-							{% endfor %}
-							<!-- The prototype for new entries -->
+						{% for skill in form.skill %}
+							<div class="skill-entry mb-3">
+								{{ form_widget(skill.skill, {'attr': {'class': 'form-control'}}) }}
+							</div>
+						{% endfor %}
+
 							{% if form.skill|length == 0 %}
 								<div class="skill-entry mb-3">
-									{{ form_row(form.skill.vars.prototype.skills,{'attr': {'class': 'mb-3'}})}}
+										{{ form_widget(form.skill.vars.prototype)}}
 								</div>
 							{% endif %}
-						</div>
+
 					</div>
 
 
+
 					<div class="col-lg-6 mb-3">
-						{{ form_widget(form.save) }}
+						{{ form_widget(form.save,{'attr':{'class':'custom-btn'}}) }}
 					</div>
 
 
@@ -310,7 +312,7 @@
 			const createExperienceEntry = (index) => {
 			return `
 										<div class="skill-entry mb-3">
-												<input type="text" name="form[skill][${index}][skills]" placeholder="Skill" class="form-control mb-3">
+												<input type="text" id="form_skill___name___skill" name="form[skill][${index}][skill]" placeholder="Skill" class="form-control mb-3">
 												<button type="button" class="btn btn-danger remove-skill">Remove</button>
 										</div>`;
 			};

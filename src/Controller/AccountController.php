@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Saved;
-use App\Form\SkillType;
 use App\Form\EducationType;
 use App\Entity\Applications;
+use App\Entity\Skill;
 use App\Form\ExperienceType;
+use App\Form\SkillType;
+use App\Repository\SkillRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -25,11 +27,11 @@ class AccountController extends AbstractController
     #[Route('/user', name: 'app_account')]
     public function index(Request $request, EntityManagerInterface $em): Response
     {
+        $user = $this->getUser();
+
         if (!in_array("ROLE_USER", $this->getUser()->getRoles())) {
             return $this->redirectToRoute(("app_index"));
         }
-
-        $user = $this->getUser();
 
         $form = $this->createFormBuilder()
             ->add("firstname", TextType::class, [
@@ -82,16 +84,17 @@ class AccountController extends AbstractController
                 'prototype' => true,
                 'prototype_name' => '__name__',
                 'data' => $user->getExperiences(),
+                'label' => false
             ])
             ->add("skill", CollectionType::class, [
                 'entry_type' => SkillType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
-                'label' => false,
                 'prototype' => true,
                 'prototype_name' => '__name__',
                 'data' => $user->getSkills(),
+                'label' => false
             ])
             ->add("save", SubmitType::class, [
                 'attr' => [
@@ -102,7 +105,7 @@ class AccountController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             foreach ($form->get('education')->getData() as $education) {
                 $education->setUser($user);
                 $em->persist($education);
@@ -116,14 +119,18 @@ class AccountController extends AbstractController
                 $em->persist($skill);
             }
 
-            $cv = $form->get('cv')->getData();
-            $cvFilename = uniqid() . '.' . $cv->guessExtension();
-            $cv->move(
-                $this->getParameter('cv_directory'),
-                $cvFilename
-            );
 
-            $user->setCV($cvFilename);
+            $cv = $form->get('cv')->getData();
+            if ($cv) {
+                $cvFilename = uniqid() . '.' . $cv->guessExtension();
+                $cv->move(
+                    $this->getParameter('cv_directory'),
+                    $cvFilename
+                );
+
+                $user->setCV($cvFilename);
+            }
+
             $em->persist($user);
             $em->flush();
             return $this->redirectToRoute("app_account");
