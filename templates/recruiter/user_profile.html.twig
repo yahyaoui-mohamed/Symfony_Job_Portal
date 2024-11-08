@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Applications
+{% endblock %}
+
+{% block body %}
+
+	<div class="d-flex">
+		<div class="admin">
+			{% include 'recruiter_sidebar.html.twig' %}
+		</div>
+		<div class="container">
+			<div class="dashboard">
+        <div class="user-profile">
+          <div class="row">
+            <div class="col-lg-3">
+              <div class="avatar mb-3">
+                <img src="/avatars/{{user.useravatar}}" alt=""/>
+              </div>
+            </div>
+            <div class="col-lg-9">
+              <h3>{{user.nom}} {{user.prenom}}</h3>
+              <p>{{user.email}}</p>
+              <p>
+                {% if user.telephone %}
+                  {{user.telephone}}
+                {% else %}
+                  No phone number.
+                {% endif %}
+              </p>
+            </div>
+          </div>
+          {% if educations %}
+            <div class="user-education mb-3">
+              <h1>Educations</h1>
+              {% for education in educations %}
+                {{education.year}}
+              {% endfor %}
+            </div>
+          {% else %}
+          <p>No education.</p>
+          {% endif %}
+
+          {% if experiences %}
+            <div class="user-experience mb-3">
+              <h1 class="mb-3">Experiences</h1>
+                <div class="experience-item mb-5">
+                  <div class="row">
+                {% for experience in experiences %}
+                    <div class="col-lg-6">
+                      <h4>Job</h4>
+                      <p> {{experience.jobtitle}} </p>
+                    </div>
+                    <div class="col-lg-6">
+                      <h4>Company</h4>
+                      <p> {{experience.company}} </p>
+                    </div>
+
+                    <div class="col-lg-6 mb-5">
+                      <h4>From</h4>
+                      <p> {{experience.yearfrom|date("Y/m/d")}} </p>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                      <h4>To</h4>
+                      <p> {{experience.toyear|date("Y/m/d")}} </p>
+                    </div>
+
+                {% endfor %}
+                  </div>
+              </div>
+              
+            </div>  
+          {% else %}
+          <p>No experience.</p>
+          {% endif %}
+          
+        </div>
+			</div>
+
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block js %}
+	<script>
+
+		let dropdown = document.querySelector(".account-dropdown");
+let account = document.querySelector(".account");
+let avatar = document.querySelector(".avatar");
+
+avatar.addEventListener("click", function () {
+if (dropdown.classList.contains("show")) {
+dropdown.classList.remove("show");
+} else {
+dropdown.classList.add("show");
+}
+});
+
+document.addEventListener("click", function (e) {
+if (dropdown.classList.contains("show")) {
+if (! account.contains(e.target)) {
+dropdown.classList.remove("show");
+}
+}
+});
+
+document.querySelectorAll(".options").forEach(function (option) {
+option.addEventListener("click", function () {
+let menu = this.querySelector(".option-menu");
+console.log(this);
+menu.classList.toggle("show");
+});
+});
+	</script>
+{% endblock  %}
+

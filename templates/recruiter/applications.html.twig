@@ -11,7 +11,6 @@
 			<div class="container">
 				<div class="dashboard">
 						{% for app in apps %}
-						
 							<div class="application mb-3">
 								<div class="row">
 									<div class="col-lg-2">
@@ -35,9 +34,9 @@
 												<i class="fi fi-rr-menu-dots-vertical"></i>
 											</span>
 											<div class="option-menu">
-												<a href="#"><i class="fi fi-rr-user"></i> Profile</a>
+												<a href="/application/profile/{{app.user.id}}"><i class="fi fi-rr-user"></i> Profile</a>
 												<a href="#"><i class="fi fi-rr-envelope"></i> Contact</a>
-												<a href="#"><i class="fi fi-tr-document"></i> View CV</a>
+												<a href="/uploads/cvs/{{app.user.cv}}" download><i class="fi fi-tr-document"></i> View CV</a>
 											</div>
 										</div>
 									</div>

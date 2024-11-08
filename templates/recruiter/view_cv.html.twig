@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Applications
+{% endblock %}
+
+{% block body %}
+
+	<div class="d-flex">
+		<div class="admin">
+			{% include 'recruiter_sidebar.html.twig' %}
+		</div>
+		<div class="container">
+			<div class="dashboard">
+				<div class="cv">
+          <iframe src="uploads/cvs/{{cv}}" frameborder="0"></iframe>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block js %}
+	<script>
+
+		let dropdown = document.querySelector(".account-dropdown");
+let account = document.querySelector(".account");
+let avatar = document.querySelector(".avatar");
+
+avatar.addEventListener("click", function () {
+if (dropdown.classList.contains("show")) {
+dropdown.classList.remove("show");
+} else {
+dropdown.classList.add("show");
+}
+});
+
+document.addEventListener("click", function (e) {
+if (dropdown.classList.contains("show")) {
+if (! account.contains(e.target)) {
+dropdown.classList.remove("show");
+}
+}
+});
+
+document.querySelectorAll(".options").forEach(function (option) {
+option.addEventListener("click", function () {
+let menu = this.querySelector(".option-menu");
+console.log(this);
+menu.classList.toggle("show");
+});
+});
+	</script>
+{% endblock  %}
+

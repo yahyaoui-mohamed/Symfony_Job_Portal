@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Applications;
+use App\Entity\Education;
+use App\Entity\Experience;
 use App\Entity\Job;
+use App\Entity\User;
 use App\Form\JobType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -73,10 +76,38 @@ class JobController extends AbstractController
     #[Route('/application/{jobId}', name: 'app_apps_job')]
     public function applications($jobId, Request $request, EntityManagerInterface $em): Response
     {
-        $apps = $this->getUser()->getRecruiterApps();
+
+        $apps = $em->getRepository(Applications::class)->findBy([
+            'job' => $jobId,
+            'recruiter' => $this->getUser()->getId()
+        ]);
 
         return $this->render('Recruiter/applications.html.twig', [
-            'apps' => $apps
+            'apps' => $apps,
+        ]);
+    }
+
+    #[Route('/application/profile/{id}', name: 'app_apps_user_profile')]
+    public function appProfile($id, Request $request, EntityManagerInterface $em): Response
+    {
+        $user = $em->getRepository(User::class)->findOneBy(['id' => $id]);
+        $education = $em->getRepository(Education::class)->findBy(['user' => $user]);
+        $experience = $em->getRepository(Experience::class)->findBy(['user' => $user]);
+
+        return $this->render('Recruiter/user_profile.html.twig', [
+            'user' => $user,
+            'educations' => $education,
+            'experiences' => $experience,
+
+        ]);
+    }
+
+    #[Route('/application/cv/{id}', name: 'app_cv_view')]
+    public function viewCV($id, Request $request, EntityManagerInterface $em): Response
+    {
+        $cv = $em->getRepository(Applications::class)->findOneBy(['id' => $id])->getCv();
+        return $this->render('Recruiter/view_cv.html.twig', [
+            'cv' => $cv
         ]);
     }
 
