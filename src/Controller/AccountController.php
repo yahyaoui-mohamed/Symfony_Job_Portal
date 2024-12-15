@@ -9,6 +9,7 @@ use App\Entity\Skill;
 use App\Form\ExperienceType;
 use App\Form\SkillType;
 use App\Repository\SkillRepository;
+use App\Service\SkillsGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,13 +20,16 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
+use function PHPSTORM_META\type;
 
 class AccountController extends AbstractController
 {
     #[Route('/user', name: 'app_account')]
-    public function index(Request $request, EntityManagerInterface $em): Response
+    public function index(Request $request, EntityManagerInterface $em, SkillsGenerator $skillsGenerator): Response
     {
         $user = $this->getUser();
 
@@ -86,15 +90,8 @@ class AccountController extends AbstractController
                 'data' => $user->getExperiences(),
                 'label' => false
             ])
-            ->add("skill", CollectionType::class, [
-                'entry_type' => SkillType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false,
-                'prototype' => true,
-                'prototype_name' => '__name__',
-                'data' => $user->getSkills(),
-                'label' => false
+            ->add("skill", HiddenType::class, [
+                'label' => false,
             ])
             ->add("save", SubmitType::class, [
                 'attr' => [
@@ -104,8 +101,12 @@ class AccountController extends AbstractController
             ->getForm();
 
         $form->handleRequest($request);
+        $userSkills = [];
+        foreach ($user->getSkills()->toArray() as $skill) {
+            $userSkills[] = $skill->getSkill();
+        }
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             foreach ($form->get('education')->getData() as $education) {
                 $education->setUser($user);
@@ -115,11 +116,17 @@ class AccountController extends AbstractController
                 $experience->setUser($user);
                 $em->persist($experience);
             }
-            foreach ($form->get('skill')->getData() as $skill) {
-                $skill->setUser($user);
-                $em->persist($skill);
-            }
 
+            $skills = explode(",", $data["skill"]);
+
+            foreach ($skills as $skill) {
+                if (!empty($skill)) {
+                    $newSkill = new Skill();
+                    $newSkill->setSkill($skill);
+                    $newSkill->setUser($user);
+                    $em->persist($newSkill);
+                }
+            }
 
             $cv = $form->get('cv')->getData();
             if ($cv) {
@@ -145,6 +152,8 @@ class AccountController extends AbstractController
         return $this->render('User/index.html.twig', [
             'form' => $form->createView(),
             'user' => $user,
+            'skills' => $skillsGenerator->getSkills(),
+            'userSkills' => $userSkills,
         ]);
     }
 

@@ -67,3 +67,32 @@
 }
 
 .skill-entry {}
+
+.skills-container {
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 20px 0;
+
+  .item {
+    display: inline-block;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px 2px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #000;
+  }
+}
+
+.all-skills {
+  .item {
+    display: inline-block;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px 2px;
+    cursor: pointer;
+  }
+}

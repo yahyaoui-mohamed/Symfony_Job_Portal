@@ -34,14 +34,17 @@ class EducationType extends AbstractType
             ])
             ->add('university', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control mb-3'
+                    'class' => 'form-control mb-3',
+                    'placeholder' => 'University',
                 ],
                 'required' => false,
             ])
             ->add('degree', ChoiceType::class, [
                 'attr' => [
-                    'class' => 'form-select mb-3'
+                    'class' => 'form-select mb-3',
+
                 ],
+                'placeholder' => 'Degree',
                 'choices' => [
                     'High School' => 'high school',
                     'Bachelor Degree' => 'bachelor degree',

@@ -20,9 +20,6 @@ class Skill
     #[ORM\Column(length: 1000)]
     private ?string $skill = null;
 
-    #[ORM\Column]
-    private ?int $experience = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -48,18 +45,6 @@ class Skill
     public function setSkill(string $skill): static
     {
         $this->skill = $skill;
-
-        return $this;
-    }
-
-    public function getExperience(): ?int
-    {
-        return $this->experience;
-    }
-
-    public function setExperience(int $experience): static
-    {
-        $this->experience = $experience;
 
         return $this;
     }
