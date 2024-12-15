@@ -16,7 +16,12 @@ class IndexController extends AbstractController
   public function index(Request $request, SessionInterface $session)
   {
     $form = $this->createFormBuilder()
-      ->add("job", SearchType::class)
+      ->add("job", SearchType::class, [
+        'attr' => [
+          'class' => 'search-bar form-control',
+          'placeholder' => 'Job title or keywords'
+        ]
+      ])
       ->add("location", ChoiceType::class, [
         'choices' => [
           'France' => 'France',
@@ -32,7 +37,12 @@ class IndexController extends AbstractController
           'class' => 'form-select'
         ]
       ])
-      ->add("search", SubmitType::class)
+      ->add("search", SubmitType::class, [
+        'attr' => [
+          'class' => 'btn btn-search',
+          'value' => 'Search'
+        ]
+      ])
       ->getForm();
 
     $form->handleRequest($request);
@@ -47,10 +57,6 @@ class IndexController extends AbstractController
       return $this->redirectToRoute("app_job_search");
     }
 
-    // if ($this->getUser()) {
-    //   if (in_array("ROLE_ADMIN", $this->getUser()->getRoles())) {
-    //   }
-    // }
     return $this->render("Index/index.html.twig", [
       'form' => $form->createView()
     ]);

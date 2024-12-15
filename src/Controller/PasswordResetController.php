@@ -4,23 +4,22 @@
 
 namespace App\Controller;
 
-use App\Entity\PasswordReset;
 use App\Entity\User;
-use App\Service\EmailService;
 use DateTimeImmutable;
+use App\Entity\PasswordReset;
+use App\Service\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PasswordResetController extends AbstractController
 {
     #[Route('/password/reset', name: 'app_password_reset')]
-    public function index(Request $request, EmailService $emailService, MailerInterface $mailer, EntityManagerInterface $em): Response
+    public function index(Request $request, EmailService $emailService, EntityManagerInterface $em): Response
     {
         $form = $this->createFormBuilder()
             ->add("email", EmailType::class, [
@@ -54,11 +53,9 @@ class PasswordResetController extends AbstractController
 
             $token = bin2hex(random_bytes(32));
 
-            // Generate a password reset link (example link)
             $resetLink = "http://localhost:8000" . $this->generateUrl('app_password_reset_confirm', [
                 'token' => $token
             ], true);
-            // dd($resetLink);
 
             $user = $em->getRepository(User::class)->findOneBy(["email" => $email]);
             $emailService->sendPasswordResetEmail($email, $resetLink);
@@ -66,10 +63,11 @@ class PasswordResetController extends AbstractController
             $passwordReset = new PasswordReset();
             $passwordReset->setUser($user);
             $passwordReset->setToken($token);
-            $passwordReset->setExpiresAt(new DateTimeImmutable('+1 hour')); // Set expiry time
             $passwordReset->setCreatedAt(new DateTimeImmutable());
+            $passwordReset->setExpiresAt(new DateTimeImmutable('+1 hour'));
             $em->persist($passwordReset);
             $em->flush();
+
             $this->addFlash('success', 'A password reset link has been sent to your email.');
 
             return $this->redirectToRoute('app_password_reset');

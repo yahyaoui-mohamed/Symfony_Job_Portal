@@ -5,7 +5,11 @@
 
 {% block body %}
 	<div class="form-wrapper text-center">
-		{{ form_start(form, {'attr': {'class':'login-form'}}) }}
+            {% for message in app.flashes("success") %}
+                    {{ message}}
+            {% endfor %}
+        {{ form_start(form, {'attr': {'class':'login-form'}}) }}
+            
         <h1 class="h3 mb-5 font-weight-normal">Reset password</h1>
         <p>Enter the email associated with your account</p></p>
         
@@ -20,7 +24,6 @@
             Try <a href="{{path("app_login")}}">Login</a> or return to <a href="{{path("app_index")}}">Home</a>
         </div>
         {{ form_end(form) }}
-
 	</div>
 
 {% endblock %}

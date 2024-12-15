@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
 
+{% block title %} JobPortal {% endblock %}
+
+
 {% block body %}
 
 
@@ -8,11 +11,11 @@
 <div class="hero">
   <div class="overlay"></div>
   <div class="job-search">
-    {{ form_start(form,{'method': 'POST'}) }}
+    {{ form_start(form) }}
       <div class="d-flex">
-        {{form_widget(form.job, {'attr' : {'class': 'search-bar form-control', 'placeholder':'Job title or keywords'}})}}
-        {{form_widget(form.location, {'attr' : {'class': 'form-select'}})}}
-        {{form_widget(form.search, {'attr' : {'class': 'btn search-btn', 'value':'Search'}})}}  
+        {{form_widget(form.job)}}
+        {{form_widget(form.location)}}
+        {{form_widget(form.search)}}  
       </div>
     {{ form_end(form) }}
 

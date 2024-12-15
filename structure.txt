@@ -1,49 +1,166 @@
-Users:
-  Admin
-  Recruteur
-  User
+Languages, Frameworks & Libraries :
+ - Symfony 7
+ - Javascript
+ - Sass
+ - Bootstrap
 
-Le Recruteur peut ajouter une offre d'emploi en précisant :
+Database :
 
-Le titre,
-La description,
-La localisation de l'offre
-Les langages / technologies demandées
-Les années d'expériences
+  1 - User (SuperAdmin | Recruiter | User)
+      * id
+      * email
+      * roles
+      * password
+      * nom
+      * prénom
+      * registration_date
+      * telephone
+      * avatar
+      * cv
+      * cvname
+
+  2 - Job 
+      * id
+      * name
+      * description
+      * minsalary
+      * maxsalary
+      * type
+      * country
+      * city
+      * available
+      * recruiter_id
+      * requirements
+      * experiences
+      * missions
+      * posted_date
+
+  3 - Applications
+      * id
+      * user_id
+      * job_id
+      * applied_at
+      * cv
+      * cover_letter
+      * recruiter_id
+
+  4 - Education
+      * id
+      * year
+      * degree
+      * university
+      * user_id
+
+  5 - Experience 
+      * id
+      * user_id
+      * company
+      * job_title
+      * year_from
+      * year_to
+
+  6 - Skill
+      * id
+      * user_id
+      * skill
+      * experience
+
+  7 - Saved
+      * id
+      * user_id
+      * job_id
+
+  8 - Password Reset
+      * id
+      * token
+      * expires_at
+      * created_at
+      * user_id
+
+
+Layouts :
+
+  - Navbar
+    * Navbar Brand
+    * Home
+    * Jobs
+    * About
+    * Contact
+    * Login / Logout or Account
+
+  - Home Page :
+    * Landing Page + Search Form
+    * Top jobs section
+    * How it works section
+    * Newsletter section
+  - Footer
+  - Jobs Page
+  - About Page
+    * Description for the app
+  - Contact Page
+  - Login Form Page
+  - Signup Form Page
+  - Dashboard :
+    * SuperAdmin Dashboard
+    * Recruiter Dashboard
+  - User Page :
+    * Profile
+    * My Applications
+    * Saved
+    * Settings
 
 
 
-- Un test d'évaluation sera crée juste après la création d'une offre d'emploi qui est rélié à cette offre et à ce recruteur
-- Le recruteur peut contacter les demandeurs, peut modifier l'offre, peut consulter la liste des candidats dans ce poste,
+Fonctionnalitées :
+* User :
+- L'utilisateur peut créer un compte.
+- L'utilisateur peut faire une recherche dans le formulaire de Landing Page
+- L'utilisateur peut modifier son profile (Nom, Prénom, Email, Téléphone, CV, Education, Experience, Skills, Photo, Password)
+- L'utilisateur peut consulter les emplois dont il a postulé
+- L'utilisateur peut consulter les emplois dont il a enregistré
+- L'utilisateur peut faire une recherche dans la page des emplois en effectuant des filtres (Pertinance, Date, Categorie, Type, Location, Niveau d'experience ...)
+- L'utilisateur peut envoyer une candidature.
+
+
+
+* Recruiter :
+- Le Recruteur peut créer un compte.
+- Le Recruteur peut ajouter une offre d'emploi en précisant : Le titre, La description, La localisation de l'offre,  Les langages / technologies demandées, Les années d'expériences, les bonus.
+- Le Recruteur peut créer un test d'évaluation qui sera crée juste après la création d'une offre d'emploi qui est rélié à cette offre et à ce recruteur.
+- Le recruteur peut contacter les demandeurs, peut modifier l'offre, peut consulter la liste des candidats dans ce poste triés par niveau d'expérience et compétences.
+- Le recruteur peut ajouter un entretien en précisant l'utilisateur et la date (L'entretien sera en visio en utilisant socket.io ou n'importe quelle librairie qui utilise le WebRTC).
+
+
+* Admin :
+  - L'admin peut consulter les nombres de recruteur et utilisateur totales dans le site
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 
 Applications :
 
-*app_id
-user_id
-job_id
-applied_at
+* app_id
+* user_id
+* job_id
+* applied_at
 
 Education :
 
 *id
-university
-degree
-year
+* university
+* degree
+* year
 
 Experiences :
 
-*id
-company
-job title
-from
-to
-user_id
+* id
+* company
+* job title
+* from
+* to
+* user_id
 
 Skills:
-
-*id
-skills
-user_id
+* id
+* skills
+* user_id
